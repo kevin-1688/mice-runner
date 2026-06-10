@@ -3,6 +3,665 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>跳出老鼠賽跑 · 現金流人生｜富爸爸窮爸爸現金流理財遊戲</title>
+
+<!-- ====== SEO：上線前把 REPLACE-ME.vercel.app 換成你的實際網域，og-image.png 放在站台根目錄 ====== -->
+<meta name="description" content="用《富爸爸，窮爸爸》的現金流邏輯打造的免費網頁遊戲：買進會生錢的資產、避開偽裝成資產的負債（新車、自住房、升職加薪），讓被動現金流超過支出就能跳出老鼠賽跑。內含配息與累計型投資、槓桿房地產、止盈止損，邊玩邊搞懂財務自由。">
+<meta name="keywords" content="富爸爸窮爸爸,現金流遊戲,財務自由,被動收入,老鼠賽跑,理財遊戲,財商,資產負債,Cashflow,投資理財,被動收入遊戲">
+<meta name="author" content="WAKE STUDIO">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#16302b">
+<link rel="canonical" href="https://REPLACE-ME.vercel.app/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2316302b'/%3E%3Crect%20x='5'%20y='13'%20width='22'%20height='6'%20rx='3'%20fill='%231f4039'/%3E%3Crect%20x='5'%20y='13'%20width='15'%20height='6'%20rx='3'%20fill='%23c9a24b'/%3E%3C/svg%3E">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="現金流人生">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:title" content="跳出老鼠賽跑 · 現金流人生">
+<meta property="og:description" content="買資產、避開偽裝成資產的負債，讓被動現金流超過支出就能跳出老鼠賽跑。配息 vs 累計、槓桿房地產、止盈止損——邊玩邊搞懂財務自由。免費，瀏覽器即玩。">
+<meta property="og:url" content="https://REPLACE-ME.vercel.app/">
+<meta property="og:image" content="https://REPLACE-ME.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="跳出老鼠賽跑：金色自由進度條，被動現金流達總支出 78%">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="跳出老鼠賽跑 · 現金流人生">
+<meta name="twitter:description" content="用《富爸爸窮爸爸》現金流邏輯打造的免費網頁遊戲。讓被動現金流超過支出，跳出老鼠賽跑。">
+<meta name="twitter:image" content="https://REPLACE-ME.vercel.app/og-image.png">
+
+<!-- 結構化資料 -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"VideoGame",
+  "name":"跳出老鼠賽跑 · 現金流人生",
+  "alternateName":"現金流人生 Cashflow",
+  "description":"用《富爸爸，窮爸爸》的現金流邏輯打造的免費網頁遊戲：累積會生現金流的資產、避開偽裝成資產的負債，讓被動現金流超過支出就能跳出老鼠賽跑。內含配息與累計型投資、槓桿房地產、止盈止損機制。",
+  "url":"https://REPLACE-ME.vercel.app/",
+  "image":"https://REPLACE-ME.vercel.app/og-image.png",
+  "inLanguage":"zh-TW",
+  "genre":["教育遊戲","模擬遊戲","理財"],
+  "gamePlatform":"Web browser",
+  "applicationCategory":"GameApplication",
+  "operatingSystem":"Web browser",
+  "author":{"@type":"Organization","name":"WAKE STUDIO"},
+  "publisher":{"@type":"Organization","name":"WAKE STUDIO"},
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"}
+}
+</script>
+<!-- ====== /SEO ====== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16302b; --ink-2:#1f4039; --paper:#f3efe2; --paper-line:#d8d0ba;
+    --gold:#c9a24b; --gold-soft:#e3c884; --asset:#2f7d5b; --liab:#a8423d;
+    --text:#19271f; --text-dim:#5d6b5f; --paper-dim:#cfc8b4; --shadow:rgba(0,0,0,.28);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  .mono{font-family:"Space Mono",monospace;font-variant-numeric:tabular-nums}
+  body{
+    font-family:"Noto Sans TC",system-ui,sans-serif;
+    background:radial-gradient(1200px 600px at 80% -10%, #235049 0%, transparent 60%), var(--ink);
+    color:var(--paper); min-height:100vh; display:flex; justify-content:center;
+    padding:clamp(12px,3vw,32px); -webkit-font-smoothing:antialiased;
+  }
+  .wrap{width:100%;max-width:1000px}
+
+  header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .brand .eyebrow{font-size:12px;letter-spacing:.34em;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:4px}
+  .brand h1{font-family:"Noto Serif TC",serif;font-weight:900;font-size:clamp(24px,5vw,38px);line-height:1;color:var(--paper)}
+  .brand h1 .sub{color:var(--gold-soft);font-size:.52em;display:block;margin-top:6px;letter-spacing:.06em;font-weight:700}
+  .clock{text-align:right;display:flex;gap:22px}
+  .clock .blk .lbl{font-size:11px;letter-spacing:.18em;color:var(--text-dim);text-transform:uppercase}
+  .clock .blk .val{font-family:"Space Mono",monospace;font-size:24px;font-weight:700;color:var(--paper);line-height:1.2}
+  .clock .blk .val.cash{color:var(--gold)}
+  .clock .blk .val.nw{color:var(--gold-soft);font-size:18px}
+
+  .freedom{background:linear-gradient(180deg,var(--ink-2),#173630);border:1px solid rgba(201,162,75,.35);border-radius:14px;padding:18px 22px;margin-bottom:18px;box-shadow:0 10px 30px var(--shadow)}
+  .freedom .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+  .freedom .top .t{font-weight:900;font-size:15px}
+  .freedom .top .t small{color:var(--text-dim);font-weight:400;display:block;font-size:11px;letter-spacing:.16em;margin-top:2px;text-transform:uppercase}
+  .freedom .ratio{font-family:"Space Mono",monospace;font-size:22px;font-weight:700;color:var(--gold)}
+  .track{position:relative;height:28px;border-radius:8px;background:repeating-linear-gradient(90deg,#0f241f 0 9px,#12281f 9px 10px);border:1px solid rgba(0,0,0,.4);overflow:hidden}
+  .track .fill{position:absolute;inset:0 auto 0 0;width:0%;background:linear-gradient(180deg,var(--gold-soft),var(--gold));transition:width .6s cubic-bezier(.4,0,.2,1);box-shadow:0 0 18px rgba(201,162,75,.6)}
+  .track .goalline{position:absolute;top:-4px;bottom:-4px;right:0;width:2px;background:var(--paper)}
+  .freedom .legend{display:flex;justify-content:space-between;margin-top:9px;font-size:12px;color:var(--text-dim);flex-wrap:wrap;gap:6px}
+  .freedom .legend b{color:var(--paper);font-family:"Space Mono",monospace}
+
+  .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:start}
+  @media(max-width:780px){.grid{grid-template-columns:1fr}.clock{text-align:left}}
+
+  .ledger{background:var(--paper);color:var(--text);border-radius:14px;box-shadow:0 12px 28px var(--shadow);overflow:hidden}
+  .ledger h2{font-family:"Noto Serif TC",serif;font-size:15px;letter-spacing:.16em;padding:14px 18px;background:var(--ink);color:var(--gold-soft);display:flex;justify-content:space-between;align-items:center}
+  .ledger h2 .net{font-family:"Space Mono",monospace;font-size:14px}
+  .net.pos{color:#7fd6a6}.net.neg{color:#f0a09b}
+  .col2{display:grid;grid-template-columns:1fr 1fr}
+  .col2 > div{padding:14px 16px}
+  .col2 > div:first-child{border-right:1px dashed var(--paper-line)}
+  .grp-title{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-dim);font-weight:700;margin-bottom:8px}
+  .grp-title small{font-weight:400;text-transform:none;letter-spacing:0}
+  .line{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px solid var(--paper-line)}
+  .line:last-child{border-bottom:none}
+  .line .amt{font-family:"Space Mono",monospace;font-weight:700}
+  .amt.in{color:var(--asset)}.amt.out{color:var(--liab)}.amt.flat{color:var(--text-dim)}
+  .line.empty{color:var(--paper-dim);font-style:italic;justify-content:flex-start}
+  .sect{border-top:2px solid var(--ink)}
+  .sumline{display:flex;justify-content:space-between;padding:10px 16px;font-weight:900;font-size:13px;background:#ece6d4}
+  .sumline .amt{font-family:"Space Mono",monospace}
+  .tag{font-size:10px;letter-spacing:.06em;padding:1px 6px;border-radius:4px;margin-left:6px;font-weight:700;vertical-align:middle}
+  .tag.asset{background:rgba(47,125,91,.15);color:var(--asset)}
+  .tag.liab{background:rgba(168,66,61,.15);color:var(--liab)}
+  .tag.acc{background:rgba(201,162,75,.18);color:#9a7a28}
+
+  .side{display:flex;flex-direction:column;gap:14px}
+  .card{background:var(--paper);color:var(--text);border-radius:14px;box-shadow:0 12px 28px var(--shadow);overflow:hidden;border-top:5px solid var(--gold)}
+  .card.opp{border-top-color:var(--asset)}.card.evt{border-top-color:var(--liab)}
+  .card .kind{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;padding:12px 18px 0;color:var(--text-dim)}
+  .card .ttl{font-family:"Noto Serif TC",serif;font-weight:900;font-size:20px;padding:2px 18px 8px}
+  .card .desc{padding:0 18px 12px;font-size:13.5px;color:#374237;line-height:1.6}
+  .card .stats{padding:0 18px 14px;display:flex;flex-direction:column;gap:5px}
+  .card .stats .s{display:flex;justify-content:space-between;font-size:13px}
+  .card .stats .s .v{font-family:"Space Mono",monospace;font-weight:700}
+  .v.in{color:var(--asset)}.v.out{color:var(--liab)}.v.cash{color:#9a7a28}
+  .card .acts{display:flex;border-top:1px solid var(--paper-line)}
+  .card .acts button{flex:1;border:none;padding:14px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;background:var(--paper);color:var(--text);transition:.15s}
+  .card .acts button:hover{background:#e7e1cf}
+  .card .acts button.primary{background:var(--ink);color:var(--gold-soft)}
+  .card .acts button.primary:hover{background:var(--ink-2)}
+  .card .acts button.primary:disabled{background:#b9b3a2;color:#7c7768;cursor:not-allowed}
+  .card .acts button + button{border-left:1px solid var(--paper-line)}
+  .warn{font-size:12px;color:var(--liab);padding:0 18px 12px;font-weight:700}
+
+  .nextbtn{width:100%;padding:16px;border:none;border-radius:12px;cursor:pointer;font-family:"Noto Serif TC",serif;font-weight:900;font-size:16px;letter-spacing:.1em;background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#3a2c08;box-shadow:0 8px 20px rgba(201,162,75,.3);transition:.15s}
+  .nextbtn:hover{filter:brightness(1.05)}.nextbtn:active{transform:translateY(1px)}
+
+  .coach{background:rgba(255,255,255,.06);border:1px solid rgba(201,162,75,.4);border-left:4px solid var(--gold);border-radius:10px;padding:14px 16px;font-size:13.5px;line-height:1.65;color:var(--gold-soft)}
+  .coach b{color:var(--paper)}
+  .coach .who{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;font-weight:700}
+
+  /* holdings */
+  .holds{margin-top:18px;background:var(--paper);color:var(--text);border-radius:14px;box-shadow:0 12px 28px var(--shadow);overflow:hidden}
+  .holds h2{font-family:"Noto Serif TC",serif;font-size:15px;letter-spacing:.16em;padding:14px 18px;background:var(--ink);color:var(--gold-soft);display:flex;justify-content:space-between;align-items:center}
+  .holds h2 .hint{font-family:"Noto Sans TC";font-size:11px;letter-spacing:.04em;color:var(--text-dim);font-weight:400}
+  .hold{display:grid;grid-template-columns:1.4fr 1fr auto;gap:14px;align-items:center;padding:13px 18px;border-bottom:1px solid var(--paper-line)}
+  .hold:last-child{border-bottom:none}
+  @media(max-width:680px){.hold{grid-template-columns:1fr;gap:10px}}
+  .h-name{font-weight:700;font-size:14px}
+  .h-sub{font-size:12px;color:var(--text-dim);font-family:"Space Mono",monospace;margin-top:3px}
+  .h-pl{font-weight:700}.h-pl.up{color:var(--asset)}.h-pl.down{color:var(--liab)}
+  .h-orders{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--text-dim)}
+  .h-orders label{display:flex;flex-direction:column;gap:2px}
+  .h-orders input{width:78px;padding:5px 6px;border:1px solid var(--paper-line);border-radius:6px;font-family:"Space Mono",monospace;font-size:12px;background:#fbf9f1;color:var(--text)}
+  .h-orders input:focus{outline:2px solid var(--gold)}
+  .sellbtn{padding:9px 16px;border:1px solid var(--ink);border-radius:8px;background:var(--paper);color:var(--ink);font-family:inherit;font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap}
+  .sellbtn:hover{background:var(--ink);color:var(--gold-soft)}
+  .holds .empty{padding:18px;text-align:center;color:var(--paper-dim);font-style:italic;font-size:13px}
+
+  .overlay{position:fixed;inset:0;background:rgba(10,24,20,.86);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:24px;z-index:50}
+  .modal{background:var(--paper);color:var(--text);border-radius:16px;max-width:540px;width:100%;padding:32px;box-shadow:0 24px 60px rgba(0,0,0,.5);text-align:center;border-top:6px solid var(--gold);max-height:90vh;overflow:auto}
+  .modal .badge{font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px}
+  .modal h2{font-family:"Noto Serif TC",serif;font-size:26px;font-weight:900;margin-bottom:12px;line-height:1.2}
+  .modal p{font-size:14px;line-height:1.75;color:#3a463b;margin-bottom:10px;text-align:left}
+  .modal .lesson{background:#ece6d4;border-radius:10px;padding:14px 16px;text-align:left;font-size:13.5px;line-height:1.7;margin:14px 0}
+  .modal .lesson b{color:var(--asset)}
+  .modal .recap{font-family:"Space Mono",monospace;font-size:13px;text-align:left;background:var(--ink);color:var(--gold-soft);border-radius:10px;padding:14px 16px;margin:14px 0;line-height:1.75;white-space:pre-wrap}
+  .modal button{margin-top:8px;padding:14px 28px;border:none;border-radius:10px;cursor:pointer;font-family:"Noto Serif TC",serif;font-weight:900;font-size:15px;letter-spacing:.08em;background:var(--ink);color:var(--gold-soft)}
+  .modal button:hover{background:var(--ink-2)}
+  .modal.win{border-top-color:var(--asset)}.modal.lose{border-top-color:var(--liab)}
+  .hide{display:none!important}
+  footer{margin-top:22px;text-align:center;font-size:11px;color:var(--text-dim);letter-spacing:.06em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="eyebrow">現金流人生 · Cashflow</div>
+      <h1>跳出老鼠賽跑<span class="sub">讓被動收入養活你，而不是薪水</span></h1>
+    </div>
+    <div class="clock">
+      <div class="blk"><div class="lbl">第 <span id="month">1</span> 月</div><div class="val cash mono">NT$<span id="cash">50,000</span></div><div class="lbl" style="margin-top:3px">現金</div></div>
+      <div class="blk"><div class="lbl">淨資產</div><div class="val nw mono">NT$<span id="networth">50,000</span></div><div class="lbl" style="margin-top:3px">cash + 淨值</div></div>
+    </div>
+  </header>
+
+  <section class="freedom">
+    <div class="top">
+      <div class="t">自由進度<small>被動「現金流」÷ 總支出（累計型不算）</small></div>
+      <div class="ratio mono"><span id="ratio">0</span>%</div>
+    </div>
+    <div class="track"><div class="fill" id="fill"></div><div class="goalline"></div></div>
+    <div class="legend">
+      <span>被動現金流 <b class="mono">NT$<span id="passiveLeg">0</span></b> / 月</span>
+      <span>終點線＝總支出 <b class="mono">NT$<span id="goalLeg">33,000</span></b> / 月</span>
+    </div>
+  </section>
+
+  <div class="grid">
+    <section class="ledger">
+      <h2>個人財務報表 <span class="net mono" id="netflow">+15,000 / 月</span></h2>
+      <div class="col2">
+        <div><div class="grp-title">收入</div><div id="incomeList"></div></div>
+        <div><div class="grp-title">支出</div><div id="expenseList"></div></div>
+      </div>
+      <div class="sect"></div>
+      <div class="col2">
+        <div><div class="grp-title">資產 <small>市值（會漲跌）</small></div><div id="assetList"></div></div>
+        <div><div class="grp-title">負債 <small>每月把錢拿走</small></div><div id="liabList"></div></div>
+      </div>
+      <div class="sumline"><span>每月結餘（收入 − 支出）</span><span class="amt" id="surplus">+15,000</span></div>
+    </section>
+
+    <div class="side">
+      <div id="cardSlot"></div>
+      <button class="nextbtn hide" id="nextBtn">結算這個月 ▸ 抽下一張卡</button>
+      <div class="coach" id="coach">
+        <span class="who">富爸爸 · 第一課</span>
+        <b>資產把錢放進你口袋，負債把錢拿走。</b> 目標：累積足夠的資產，讓被動<b>現金流</b>覆蓋全部支出。注意——只會增值、不配息的「累計型」資產能讓你變有錢，卻不會幫你跨過自由線，因為它沒給你現金流。
+      </div>
+    </div>
+  </div>
+
+  <section class="holds">
+    <h2>持倉管理 <span class="hint">設止損／止盈價，每月結算時自動觸發；或隨時手動賣出</span></h2>
+    <div id="holdList"><div class="empty">— 還沒有任何資產。先買進一個讓錢替你工作。 —</div></div>
+  </section>
+
+  <footer>休息時間的小東西 · WAKE · 用後果教觀念</footer>
+</div>
+
+<div class="overlay" id="intro">
+  <div class="modal">
+    <div class="badge">怎麼玩</div>
+    <h2>你被困在老鼠賽跑裡</h2>
+    <p>每月領薪水、付帳單，結餘進存款。途中出現<b>機會卡</b>與<b>誘惑卡</b>，你決定接受或略過。買進的資產會在「持倉管理」裡漲跌，你可以止盈止損。</p>
+    <div class="lesson">
+      <b>勝利：</b>被動<b>現金流</b> ≥ 總支出 → 跳出老鼠賽跑。<br>
+      <b>失敗：</b>現金見底、被迫借第三次高利貸 → 破產。
+    </div>
+    <p style="margin-bottom:0">兩種資產要分清楚：<b>配息型</b>給你每月現金流（幫你跨線）；<b>累計型</b>只增值、不配息（要靠賣出止盈，再換成會生現金流的資產）。小心偽裝成資產的負債：新車、自住大房、升職加薪。</p>
+    <button id="startBtn">開始第一個月</button>
+  </div>
+</div>
+
+<div class="overlay hide" id="endScreen">
+  <div class="modal" id="endModal">
+    <div class="badge" id="endBadge"></div>
+    <h2 id="endTitle"></h2>
+    <div class="recap" id="endRecap"></div>
+    <div class="lesson" id="endLesson"></div>
+    <button id="restartBtn">再玩一次</button>
+  </div>
+</div>
+
+<script>
+"use strict";
+const fmt = n => Math.round(n).toLocaleString("en-US");
+const gauss = () => (Math.random()+Math.random()+Math.random()+Math.random()-2)/2; // ~N(0,~0.58)
+
+let AID = 1;
+function freshState(){
+  AID = 1;
+  return {
+    month:1, cash:50000, salary:48000,
+    living:{ "房租":14000, "生活費":11000, "交通":3500, "娛樂雜支":4500 },
+    assets:[], liabilities:[],
+    ownsHome:false, loanCount:0, raisedTimes:0, over:false, deck:[], tempCut:0,
+  };
+}
+let S = freshState();
+let curCard=null, curResolved=true;
+
+/* derived */
+const livingTotal = ()=>Object.values(S.living).reduce((a,b)=>a+b,0);
+const liabTotal   = ()=>S.liabilities.reduce((a,b)=>a+b.payment,0);
+const passive     = ()=>S.assets.reduce((a,b)=>a+(b.income||0),0);   // 只有配息型有 income
+const expenses    = ()=>livingTotal()+liabTotal();
+const income      = ()=>S.salary+passive();
+const surplus     = ()=>income()-expenses();
+const equity      = a=>a.value-(a.loan||0);
+const netWorth    = ()=>S.cash + S.assets.reduce((s,a)=>s+equity(a),0);
+
+/* ---------- cards ---------- */
+const OPPS = [
+  {id:"hidiv", kind:"投資機會 · 配息型", ttl:"高股息 ETF（如 0056）", trapKind:false,
+   desc:"每月配息、現金直接進你口袋。報酬不高，但這種「現金流」才是幫你跨過自由線的東西。",
+   buy:{cost:100000, mk:{type:"配息股",tag:"asset",income:520,value:100000,basis:100000,drift:0.0025,vol:0.018}},
+   coach:"<b>你買進了第一個會配息的資產。</b>就算只有 520，方向對了：它每月把現金放進你口袋，直接推進自由進度條。"},
+  {id:"bondacc", kind:"投資機會 · 累計型", ttl:"債券 ETF（累計不配息）", trapKind:false,
+   desc:"配息自動滾入再投資，本金穩穩複利長大。波動低，是淨資產的壓艙石——但它不給你現金流。",
+   buy:{cost:60000, mk:{type:"累計",tag:"acc",income:0,value:60000,basis:60000,drift:0.0035,vol:0.012,acc:true}},
+   coach:"<b>注意：累計型不配息，所以它不算被動現金流，自由進度條不會動。</b>它讓你的「淨資產」變大，但你要嘛在高點止盈、把資本換成會配息的資產，否則退休時手上有資產卻沒現金流。"},
+  {id:"mktacc", kind:"投資機會 · 累計型", ttl:"大盤 ETF（如 0050，累計）", trapKind:false,
+   desc:"長期年化報酬高、波動也大。增值靠賣出實現——這就是止盈止損派上用場的地方。",
+   buy:{cost:100000, mk:{type:"累計",tag:"acc",income:0,value:100000,basis:100000,drift:0.008,vol:0.035,acc:true}},
+   coach:"大盤累計 ETF 是「資本利得」遊戲：它不發現金給你，<b>漲上去要自己賣才算數</b>。在持倉管理設好止盈／止損，別讓情緒幫你做決定。"},
+  {id:"rent", kind:"房地產 · 槓桿", ttl:"出租套房", trapKind:false, leverage:true,
+   desc:"頭期只付 20%，跟銀行借 100 萬。租金 16,000 進帳，但房貸＋管理費 13,500——淨現金流才是你的。房價會漲跌，槓桿會放大兩邊。",
+   buy:{down:250000, mk:{type:"房產",tag:"asset",income:16000,value:1250000,loan:1000000,basis:250000,drift:0.004,vol:0.013}, mortgage:13500, liabName:"套房房貸"},
+   coach:"看清楚：毛租金 16,000 不是你的，扣房貸 13,500，<b>淨現金流只有 2,500</b>。但因為是正的、又能享受房價增值（頭期 25 萬撐起 125 萬資產＝5 倍槓桿），它是資產。記住槓桿雙面刃。"},
+  {id:"shop", kind:"房地產 · 大", ttl:"商辦店面（全額買進）", trapKind:false,
+   desc:"資金門檻高，但淨租金穩、規模大、增值溫和。累積到這步，自由很近了。",
+   buy:{cost:700000, mk:{type:"房產",tag:"asset",income:7200,value:700000,basis:700000,drift:0.003,vol:0.009}}},
+  {id:"biz", kind:"創業 · B 象限", ttl:"加盟手搖飲店", trapKind:false,
+   desc:"請店長顧店、你當老闆收淨利。報酬高，但生意價值會波動、甚至縮水。",
+   buy:{cost:500000, mk:{type:"生意",tag:"asset",income:6800,value:500000,basis:500000,drift:0.0015,vol:0.028}},
+   coach:"這是 Kiyosaki 的 B 象限：讓<b>系統與別人的時間</b>替你賺錢。但生意不像房地產會穩穩增值，留意它的市值。"},
+];
+
+const TRAPS = [
+  {id:"car", kind:"⚠ 誘惑", ttl:"夢想新車（48 期分期）", trap:true,
+   desc:"開出去超有面子。每月只要 16,000，輕鬆負擔——對吧？",
+   payment:16000, liab:"車貸",
+   coach:"經典陷阱。車子<b>不帶來任何收入</b>，只每月把 16,000 從口袋拿走、還持續貶值。不管你多愛它，現金流上它是<b>負債</b>。"},
+  {id:"home", kind:"⚠ 重大決定", ttl:"換一間夢想自住屋", trap:true, home:true,
+   desc:"終於不用租房！房貸 22,000 取代房租 14,000。「買房是最好的投資」，大家都這麼說。",
+   newRent:22000, down:600000, liab:"自住房貸",
+   coach:"多數人以為自住房是資產。問一句：它每月把錢<b>放進</b>口袋，還是<b>拿走</b>？只會拿走（多噴 8,000／月、頭期 60 萬也卡死）。<b>自住房是負債；能收租金的才是資產。</b>"},
+  {id:"doodad", kind:"⚠ 衝動", ttl:"最新旗艦手機＋名牌包", trap:true, doodad:true,
+   desc:"限量配色，犒賞辛苦的自己。現金一次扣。",
+   cashHit:45000,
+   coach:"Kiyosaki 叫這些『doodads』——小消費把存款一點點吃光，讓你永遠湊不出買資產的本金。"},
+  {id:"raise", kind:"看似好消息", ttl:"恭喜你！升職加薪", trap:true, raise:true,
+   desc:"薪水每月多 12,000！你值得對自己好：生活品質升級。",
+   salaryUp:12000, livingUp:{"生活費":4000,"娛樂雜支":3000},
+   coach:"加薪 12,000，生活費＋娛樂卻漲了 7,000——這就是<b>老鼠賽跑</b>：收入一漲、支出立刻追上。<b>富人用資產的收入買奢侈品，不是用更高的薪水。</b>"},
+];
+
+const EVENTS = [
+  {id:"bonus", kind:"事件", ttl:"年終獎金入帳", evt:true,
+   desc:"公司發了一個月薪水的年終。要拿去買資產，還是又變成 doodad？",
+   apply:()=>{ S.cash+=S.salary; return `現金 +${fmt(S.salary)}`; }},
+  {id:"medical", kind:"事件", ttl:"突發醫療費", evt:true,
+   desc:"家人住院、自付額不少。沒有緊急預備金會很痛。",
+   apply:()=>{ S.cash-=35000; return "現金 −35,000"; },
+   coach:"這就是為什麼要先存緊急預備金——沒 buffer，一個意外就打亂全盤。"},
+  {id:"stockcrash", kind:"事件 · 市場", ttl:"股市大跌", evt:true,
+   desc:"市場恐慌，你持有的股票型 ETF 市值重挫。",
+   apply:()=>{ const st=S.assets.filter(a=>a.type==="配息股"||a.type==="累計"); if(!st.length) return "你沒有股票部位，毫髮無傷"; st.forEach(a=>a.value=Math.round(a.value*0.80)); return "全部股票型 ETF 市值 −20%"; },
+   coach:"這時候才看得出止損紀律。有設止損的，已經先出場了；沒設的，現在要決定：認賠，還是相信它會回來？"},
+  {id:"housecrash", kind:"事件 · 市場", ttl:"房市修正", evt:true,
+   desc:"升息＋政策打房，房價回檔。有槓桿的要小心。",
+   apply:()=>{ const re=S.assets.filter(a=>a.type==="房產"); if(!re.length) return "你沒有房地產，無事發生"; re.forEach(a=>a.value=Math.round(a.value*0.88)); return "全部房地產市值 −12%"; },
+   coach:"槓桿的反面：套房只跌 12%，但你頭期只付 20%，<b>淨值可能蒸發一半以上</b>。這就是借錢買資產的代價。"},
+  {id:"vacancy", kind:"事件", ttl:"房客退租", evt:true,
+   desc:"套房空了一個月，沒租金、房貸照繳。",
+   apply:()=>{ const r=S.assets.find(a=>a.type==="房產"&&a.income>0); if(!r) return "你沒有出租物件，無事發生"; S.tempCut+=r.income; return "本月一間出租物件租金歸零（房貸照付）"; }},
+  {id:"inflation", kind:"事件", ttl:"通貨膨脹", evt:true,
+   desc:"什麼都變貴了，生活費永久上漲。",
+   apply:()=>{ S.living["生活費"]+=1800; return "生活費永久 +1,800 / 月"; },
+   coach:"通膨慢慢侵蝕現金流。資產（租金、生意）通常能跟著漲價，純現金存款只會貶值。"},
+  {id:"stockboom", kind:"事件 · 市場", ttl:"多頭行情", evt:true,
+   desc:"資金行情噴發，你持有的股票型 ETF 市值大漲。",
+   apply:()=>{ const st=S.assets.filter(a=>a.type==="配息股"||a.type==="累計"); if(!st.length) return "你沒有股票部位，可惜了這波"; st.forEach(a=>a.value=Math.round(a.value*1.18)); return "全部股票型 ETF 市值 +18%"; },
+   coach:"漲上去的時候最考驗止盈紀律：累計型的帳面獲利<b>賣出才算數</b>。要續抱賭更高，還是先落袋一部分換成會配息的資產？"},
+  {id:"houseboom", kind:"事件 · 市場", ttl:"房市熱潮", evt:true,
+   desc:"低利率＋重劃題材帶動，房價走揚。有槓桿的這次站對邊。",
+   apply:()=>{ const re=S.assets.filter(a=>a.type==="房產"); if(!re.length) return "你沒有房地產，沒搭上這波"; re.forEach(a=>a.value=Math.round(a.value*1.13)); return "全部房地產市值 +13%"; },
+   coach:"槓桿的正面：房價只漲 13%，但你頭期只押 20%，<b>淨值跳升的幅度遠大於此</b>。借錢買對的資產，這就是回報。"},
+];
+
+/* deck */
+function buildDeck(){
+  const early=["hidiv","bondacc","car","doodad","raise","bonus","rent","medical","mktacc","inflation","stockboom"];
+  const mid=["rent","shop","biz","home","stockcrash","stockboom","housecrash","houseboom","vacancy","hidiv","mktacc","bondacc","doodad","bonus","shop","raise"];
+  S.deck=[...early.sort(()=>Math.random()-.5), ...mid.sort(()=>Math.random()-.5)];
+}
+function drawCard(){
+  if(!S.deck.length) buildDeck();
+  const id=S.deck.shift();
+  let c=OPPS.find(o=>o.id===id)||TRAPS.find(t=>t.id===id)||EVENTS.find(e=>e.id===id);
+  if(c&&c.home&&S.ownsHome) return drawCard();
+  if(c&&c.raise&&S.raisedTimes>=2) return drawCard();
+  return c;
+}
+
+/* ---------- render ---------- */
+const $=id=>document.getElementById(id);
+function lineRow(name,amt,dir,tag){
+  const tg=tag?`<span class="tag ${tag}">${tag==="asset"?"資產":tag==="acc"?"累計":"負債"}</span>`:"";
+  const sign=dir==="in"?"+":dir==="out"?"−":"";
+  return `<div class="line"><span>${name}${tg}</span><span class="amt ${dir}">${sign}${fmt(Math.abs(amt))}</span></div>`;
+}
+function render(){
+  $("month").textContent=S.month;
+  $("cash").textContent=fmt(S.cash);
+  $("networth").textContent=fmt(netWorth());
+
+  let inc=lineRow("薪資（主動）",S.salary,"in");
+  S.assets.filter(a=>a.income>0).forEach(a=>inc+=lineRow(a.name,a.income,"in"));
+  if(passive()===0) inc+=`<div class="line empty">— 尚無被動現金流 —</div>`;
+  $("incomeList").innerHTML=inc;
+
+  let exp="";
+  Object.entries(S.living).forEach(([k,v])=>exp+=lineRow(k,v,"out"));
+  S.liabilities.forEach(l=>exp+=lineRow(l.name,l.payment,"out"));
+  $("expenseList").innerHTML=exp;
+
+  $("assetList").innerHTML = S.assets.length
+    ? S.assets.map(a=>lineRow(a.name, equity(a), "flat", a.acc?"acc":"asset")).join("")
+    : `<div class="line empty">— 還沒有任何資產 —</div>`;
+  $("liabList").innerHTML = S.liabilities.length
+    ? S.liabilities.map(l=>lineRow(l.name,l.payment,"out","liab")).join("")
+    : `<div class="line empty">— 目前沒有負債（很好）—</div>`;
+
+  const sp=surplus();
+  $("surplus").textContent=(sp>=0?"+":"−")+fmt(Math.abs(sp));
+  $("surplus").style.color=sp>=0?"var(--asset)":"var(--liab)";
+  const nf=$("netflow"); nf.textContent=(sp>=0?"+":"−")+fmt(Math.abs(sp))+" / 月";
+  nf.className="net mono "+(sp>=0?"pos":"neg");
+
+  const goal=expenses(), p=passive();
+  const ratio=goal>0?Math.min(100,Math.round(p/goal*100)):0;
+  $("ratio").textContent=ratio; $("fill").style.width=ratio+"%";
+  $("passiveLeg").textContent=fmt(p); $("goalLeg").textContent=fmt(goal);
+
+  renderHoldings();
+}
+
+function renderHoldings(){
+  const el=$("holdList");
+  if(!S.assets.length){ el.innerHTML=`<div class="empty">— 還沒有任何資產。先買進一個讓錢替你工作。 —</div>`; return; }
+  el.innerHTML=S.assets.map(a=>{
+    const eq=equity(a);
+    const pl=eq-a.basis;
+    const plpct=(pl/a.basis*100);
+    const plcls=pl>=0?"up":"down";
+    const sub = a.loan
+      ? `市值 ${fmt(a.value)} − 貸款 ${fmt(a.loan)} = 淨值 ${fmt(eq)}`
+      : `市值 ${fmt(a.value)} · 成本 ${fmt(a.basis)}`;
+    const incTxt = a.income>0 ? `配息 +${fmt(a.income)}/月` : `累計型 · 不配息`;
+    return `<div class="hold" data-aid="${a.aid}">
+      <div>
+        <div class="h-name">${a.name} <span class="tag ${a.acc?'acc':'asset'}">${a.type}</span></div>
+        <div class="h-sub">${sub}</div>
+        <div class="h-sub">${incTxt} · 未實現損益 <span class="h-pl ${plcls}">${pl>=0?"+":"−"}${fmt(Math.abs(pl))}（${plpct>=0?"+":""}${plpct.toFixed(1)}%）</span></div>
+      </div>
+      <div class="h-orders">
+        <label>止損價<input type="number" placeholder="${fmt(Math.round(a.value*0.85))}" value="${a.sl||""}" data-k="sl"></label>
+        <label>止盈價<input type="number" placeholder="${fmt(Math.round(a.value*1.3))}" value="${a.tp||""}" data-k="tp"></label>
+      </div>
+      <button class="sellbtn" data-sell="${a.aid}">賣出（拿回 ${fmt(eq)}）</button>
+    </div>`;
+  }).join("");
+
+  el.querySelectorAll("input[data-k]").forEach(inp=>{
+    inp.onchange=e=>{
+      const aid=+e.target.closest(".hold").dataset.aid;
+      const a=S.assets.find(x=>x.aid===aid); if(!a) return;
+      const v=parseFloat(e.target.value);
+      a[e.target.dataset.k]= isNaN(v)||v<=0 ? null : v;
+    };
+  });
+  el.querySelectorAll("button[data-sell]").forEach(b=>{
+    b.onclick=()=>{ const a=S.assets.find(x=>x.aid===+b.dataset.sell); if(a) manualSell(a); };
+  });
+}
+
+/* ---------- buy a card ---------- */
+function showCard(c){
+  if(!c) return showCard(drawCard());
+  const slot=$("cardSlot");
+  const cls=c.trap?"trap":c.evt?"evt":"opp";
+  let stats="", affordable=true, reason="";
+
+  if(c.evt){
+    stats=`<div class="s"><span>類型</span><span class="v">隨機事件</span></div>`;
+  } else if(c.trap){
+    if(c.payment) stats+=`<div class="s"><span>每月支出</span><span class="v out">−${fmt(c.payment)}</span></div>`;
+    if(c.cashHit){ stats+=`<div class="s"><span>一次現金</span><span class="v out">−${fmt(c.cashHit)}</span></div>`; if(S.cash<c.cashHit){affordable=false;reason="現金不足";} }
+    if(c.home){ stats+=`<div class="s"><span>頭期款</span><span class="v out">−${fmt(c.down)}</span></div><div class="s"><span>每月房貸</span><span class="v out">−${fmt(c.newRent)}（取代房租 14,000）</span></div>`; if(S.cash<c.down){affordable=false;reason="現金不足以付頭期款";} }
+    if(c.raise) stats+=`<div class="s"><span>每月薪資</span><span class="v in">+${fmt(c.salaryUp)}</span></div>`;
+    stats+=`<div class="s"><span>帶來被動現金流？</span><span class="v out">${c.raise?"否（是主動收入）":"0 元"}</span></div>`;
+  } else {
+    const b=c.buy, mk=b.mk;
+    if(c.leverage){
+      stats+=`<div class="s"><span>頭期款</span><span class="v cash">−${fmt(b.down)}</span></div>`;
+      stats+=`<div class="s"><span>租金收入</span><span class="v in">+${fmt(mk.income)} / 月</span></div>`;
+      stats+=`<div class="s"><span>房貸＋管理費</span><span class="v out">−${fmt(b.mortgage)} / 月</span></div>`;
+      stats+=`<div class="s"><span><b>淨現金流</b></span><span class="v in"><b>+${fmt(mk.income-b.mortgage)} / 月</b></span></div>`;
+      stats+=`<div class="s"><span>房產市值 / 槓桿</span><span class="v">${fmt(mk.value)} · ${(mk.value/b.down).toFixed(1)}x</span></div>`;
+      if(S.cash<b.down){affordable=false;reason="現金不足以付頭期款";}
+    } else if(mk.acc){
+      stats+=`<div class="s"><span>投入成本</span><span class="v cash">−${fmt(b.cost)}</span></div>`;
+      stats+=`<div class="s"><span>每月配息</span><span class="v out">0（累計型）</span></div>`;
+      stats+=`<div class="s"><span>預期年化增值</span><span class="v">${(mk.drift*12*100).toFixed(1)}% ± 波動</span></div>`;
+      if(S.cash<b.cost){affordable=false;reason="現金不足";}
+    } else {
+      stats+=`<div class="s"><span>投入成本</span><span class="v cash">−${fmt(b.cost)}</span></div>`;
+      stats+=`<div class="s"><span>被動現金流</span><span class="v in">+${fmt(mk.income)} / 月</span></div>`;
+      stats+=`<div class="s"><span>年化現金回報</span><span class="v">${(mk.income*12/b.cost*100).toFixed(1)}%</span></div>`;
+      if(S.cash<b.cost){affordable=false;reason="現金不足";}
+    }
+  }
+
+  let acts;
+  if(c.evt){ acts=`<div class="acts"><button class="primary" data-act="accept">知道了，繼續</button></div>`; }
+  else{
+    const lbl=c.trap?(c.raise?"接受加薪":"買下去"):"買進";
+    acts=`<div class="acts"><button data-act="skip">略過</button><button class="primary" data-act="accept" ${affordable?"":"disabled"}>${affordable?lbl:"無法負擔"}</button></div>`;
+  }
+  const warn=(!c.evt&&!affordable)?`<div class="warn">${reason} — 先存錢或賣資產換現金</div>`:"";
+
+  slot.innerHTML=`<div class="card ${cls}"><div class="kind">${c.kind}</div><div class="ttl">${c.ttl}</div><div class="desc">${c.desc}</div><div class="stats">${stats}</div>${warn}${acts}</div>`;
+  slot.querySelectorAll("button[data-act]").forEach(b=>b.onclick=()=>resolveCard(c,b.dataset.act));
+  curCard=c; curResolved=false;
+  $("nextBtn").classList.add("hide");
+}
+
+function resolveCard(c,act){
+  let coachMsg=null;
+  if(c.evt){
+    const note=c.apply?c.apply():"";
+    coachMsg=c.coach?`<b>${note}。</b> ${c.coach}`:`事件結果：${note}。`;
+  } else if(act==="accept"){
+    if(c.trap){
+      if(c.payment) S.liabilities.push({name:c.liab,payment:c.payment});
+      if(c.cashHit) S.cash-=c.cashHit;
+      if(c.home){ S.cash-=c.down; delete S.living["房租"]; S.liabilities.push({name:c.liab,payment:c.newRent}); S.ownsHome=true; }
+      if(c.raise){ S.salary+=c.salaryUp; Object.entries(c.livingUp).forEach(([k,v])=>S.living[k]+=v); S.raisedTimes++; }
+      coachMsg=c.coach;
+    } else {
+      const b=c.buy, mk=b.mk;
+      const wasFirstIncome = (passive()===0 && mk.income>0);
+      S.cash -= (b.down||b.cost);
+      const a=Object.assign({aid:AID++, name:c.ttl, sl:null, tp:null}, mk);
+      S.assets.push(a);
+      if(c.leverage && b.liabName){ S.liabilities.push({name:b.liabName, payment:b.mortgage}); }
+      coachMsg = c.coach || (wasFirstIncome ? "你買進了第一個會配息的資產。讓它替你工作。" : null);
+    }
+  } else { if(c.trap) coachMsg="聰明。<b>略過誘惑，把現金留給能生錢的資產。</b>"; }
+
+  if(coachMsg) setCoach(c,coachMsg);
+  render();
+  curResolved=true;
+  $("cardSlot").querySelectorAll(".card button[data-act]").forEach(b=>b.disabled=true);
+  $("nextBtn").classList.remove("hide");
+  checkEnd();
+}
+function setCoach(c,msg){
+  const who=c.evt?"事件":c.trap?"富爸爸 · 別被騙了":"富爸爸";
+  $("coach").innerHTML=`<span class="who">${who}</span>${msg}`;
+}
+
+/* ---------- sell ---------- */
+function doSell(a){
+  const eq=equity(a);
+  const pl=eq-a.basis;
+  S.cash+=eq;
+  if(a.loan && a.liabName!==undefined){} // mortgage liability removed below
+  // remove coupled mortgage (leveraged real estate): match by the liability we added
+  if(a.loan){
+    const idx=S.liabilities.findIndex(l=>l.name==="套房房貸");
+    if(idx>=0) S.liabilities.splice(idx,1);
+  }
+  S.assets=S.assets.filter(x=>x.aid!==a.aid);
+  return pl;
+}
+function manualSell(a){
+  const pl=doSell(a);
+  const word=pl>=0?"獲利了結":"認賠殺出";
+  setCoach({}, `<span class="who">富爸爸 · 賣出</span>你${word}了「${a.name}」，實現損益 <b>${pl>=0?"+":"−"}${fmt(Math.abs(pl))}</b>。${a.income>0?"提醒：你也放掉了它的每月現金流，自由進度會往回退——除非你打算把這筆錢換成更好的資產。":"累計型本來就靠賣出才算數，這步是對的。"}`);
+  render(); checkEnd();
+  if(!S.over && curCard && !curResolved) showCard(curCard);
+}
+
+/* ---------- monthly ---------- */
+function markToMarket(){
+  S.assets.forEach(a=>{
+    if(a.drift!==undefined){
+      const shock=a.drift+gauss()*a.vol;
+      a.value=Math.max(0,Math.round(a.value*(1+shock)));
+    }
+  });
+}
+function runAutoOrders(){
+  S.assets.slice().forEach(a=>{
+    if(a.tp && a.value>=a.tp){ const pl=doSell(a); flashCoach(`止盈觸發：「${a.name}」漲到 ${fmt(a.value)} 自動賣出，實現 ${pl>=0?"+":"−"}${fmt(Math.abs(pl))}。紀律勝過情緒。`); }
+    else if(a.sl && a.value<=a.sl){ const pl=doSell(a); flashCoach(`止損觸發：「${a.name}」跌到 ${fmt(a.value)} 自動賣出，認賠 ${fmt(Math.abs(pl))}。止損的意義就是把損失關在門外。`); }
+  });
+}
+let pendingCoach=null;
+function flashCoach(msg){ pendingCoach=(pendingCoach?pendingCoach+"<br><br>":"")+msg; }
+
+function nextMonth(){
+  // 1 結算現金流
+  let flow=income()-expenses();
+  if(S.tempCut){ flow-=S.tempCut; S.tempCut=0; }
+  S.cash+=flow;
+  S.month++;
+  // 2 資產重新計價 + 自動單
+  markToMarket();
+  runAutoOrders();
+  // 3 現金見底 → 緊急信貸
+  if(S.cash<0){
+    S.loanCount++;
+    if(S.loanCount>=3){ render(); return endGame(false,"loan"); }
+    S.cash+=80000;
+    S.liabilities.push({name:`緊急信貸 ${S.loanCount}`,payment:3500});
+    flashCoach(`<b>現金見底，被迫借了第 ${S.loanCount} 次高利貸</b>（+80,000 現金，每月多 3,500 支出）。再借第三次就破產。`);
+  }
+  if(pendingCoach){ $("coach").innerHTML=`<span class="who">富爸爸 · 本月</span>${pendingCoach}`; pendingCoach=null; }
+  render();
+  if(checkEnd()) return;
+  showCard(drawCard());
+}
+function checkEnd(){
+  if(S.over) return true;
+  if(passive()>=expenses() && passive()>0){ endGame(true); return true; }
+  return false;
+}
+
+/* ---------- end ---------- */
+function endGame(win){
+  S.over=true;
+  const m=$("endModal");
+  m.className="modal "+(win?"win":"lose");
+  const assetLines = S.assets.length
+    ? S.assets.map(a=>`  ${a.name}　淨值 ${fmt(equity(a))}${a.income>0?` · 配息 +${fmt(a.income)}`:" · 累計"}`).join("\n")
+    : "  （沒有任何資產）";
+  const recap =
+    `${win?"用時":"撐了"}：${S.month} 個月\n`+
+    `被動現金流：NT$${fmt(passive())} / 月\n`+
+    `總支出：　　NT$${fmt(expenses())} / 月\n`+
+    `淨資產：　　NT$${fmt(netWorth())}\n`+
+    (win?"":`借高利貸：${S.loanCount} 次\n`)+
+    `————————————\n你的資產：\n${assetLines}`;
+  if(win){
+    $("endBadge").textContent="你自由了";
+    $("endTitle").textContent="跳出了老鼠賽跑";
+    $("endLesson").innerHTML=`你做到了核心：<b>讓被動現金流覆蓋全部支出</b>。注意你贏的關鍵不是薪水高、也不是淨資產大——而是你把錢換成了<b>會配息的資產</b>。很多人淨資產比你高卻還在上班，因為他們的錢都鎖在不配息的東西、或被自住房和新車拿走了。`;
+  } else {
+    $("endBadge").textContent="破產";
+    $("endTitle").textContent="你輸給了老鼠賽跑";
+    $("endLesson").innerHTML=`現金見底、被每月的負債支出拖垮。回想：你的錢有多少變成<b>會生錢的資產</b>，又有多少變成<b>每月把錢拿走的負債</b>（新車、大房、doodads）？這就是大多數人一輩子困在賽跑裡的原因。`;
+  }
+  $("endRecap").textContent=recap;
+  $("endScreen").classList.remove("hide");
+}
+
+/* ---------- wiring ---------- */
+$("startBtn").onclick=()=>{ $("intro").classList.add("hide"); buildDeck(); render(); showCard(drawCard()); };
+$("nextBtn").onclick=nextMonth;
+$("restartBtn").onclick=()=>{
+  S=freshState(); $("endScreen").classList.add("hide");
+  $("coach").innerHTML=`<span class="who">富爸爸 · 第一課</span><b>資產把錢放進你口袋，負債把錢拿走。</b> 累計型資產讓你變有錢卻不給現金流——要靠止盈換成會配息的資產，才跨得過自由線。`;
+  buildDeck(); render(); showCard(drawCard());
+};
+render();
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>跳出老鼠賽跑 · 現金流人生</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
