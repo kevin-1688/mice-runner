@@ -276,6 +276,98 @@
   }
   .hide{display:none!important}
   footer{margin-top:22px;text-align:center;font-size:11px;color:var(--text-dim);letter-spacing:.06em}
+
+  /* ===== Hook B: gold pulse on progress bar ===== */
+  @keyframes goldPulse{
+    0%{box-shadow:0 0 18px rgba(201,162,75,.6)}
+    40%{box-shadow:0 0 38px rgba(201,162,75,1),0 0 70px rgba(227,200,132,.6)}
+    100%{box-shadow:0 0 18px rgba(201,162,75,.6)}
+  }
+  @keyframes goldShimmer{
+    0%,100%{opacity:1}
+    50%{opacity:.7}
+  }
+  .track .fill.pulse{
+    animation:goldPulse .8s ease-out;
+  }
+  .bar-tip{
+    position:absolute;top:-38px;background:var(--gold);color:var(--ink);font-size:12px;font-weight:700;
+    padding:5px 10px;border-radius:8px;white-space:nowrap;pointer-events:none;
+    transform:translateX(-50%);opacity:0;transition:opacity .2s;
+    font-family:"Noto Sans TC",sans-serif;
+  }
+  .bar-tip.show{opacity:1;}
+  .bar-tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);
+    border:5px solid transparent;border-top-color:var(--gold);}
+
+  /* ===== Hook C: red bleed animation ===== */
+  @keyframes bleedDown{
+    0%{opacity:0;transform:translateY(0)}
+    15%{opacity:1}
+    80%{opacity:.8}
+    100%{opacity:0;transform:translateY(44px)}
+  }
+  .bleed-anim{
+    position:fixed;pointer-events:none;z-index:200;
+    font-family:"Space Mono",monospace;font-weight:700;font-size:22px;
+    color:#e05c56;text-shadow:0 2px 8px rgba(168,66,61,.6);
+    animation:bleedDown 1.4s ease-out forwards;
+  }
+
+  /* ===== Hook A: soul-question modal ===== */
+  .soul-q{
+    font-family:"Noto Serif TC",serif;font-size:22px;font-weight:900;
+    color:var(--ink);line-height:1.45;margin-bottom:18px;
+  }
+  .soul-counter{
+    font-family:"Space Mono",monospace;font-size:48px;font-weight:700;
+    color:var(--liab);text-align:center;margin:18px 0 6px;
+    animation:goldShimmer 1.5s ease-in-out infinite;
+  }
+  .soul-sub{font-size:13px;color:var(--text-dim);text-align:center;margin-bottom:18px;}
+  .soul-cta{width:100%;margin-top:16px;padding:16px;border:none;border-radius:12px;cursor:pointer;
+    font-family:"Noto Serif TC",serif;font-weight:900;font-size:16px;letter-spacing:.08em;
+    background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#3a2c08;
+    box-shadow:0 8px 20px rgba(201,162,75,.35);transition:.15s;}
+  .soul-cta:hover{filter:brightness(1.07);}
+
+  /* ===== Hook D: near-miss endgame ===== */
+  .nearmiss-pct{
+    font-family:"Space Mono",monospace;font-size:64px;font-weight:700;
+    color:var(--gold);text-align:center;margin:10px 0 2px;
+    line-height:1;
+  }
+  .nearmiss-label{
+    font-size:13px;color:var(--text-dim);text-align:center;margin-bottom:14px;
+  }
+  .nearmiss-bar{height:18px;border-radius:8px;background:#d8d0ba;overflow:hidden;margin:0 0 10px;}
+  .nearmiss-bar .fill{height:100%;background:linear-gradient(90deg,var(--gold-soft),var(--gold));
+    border-radius:8px;transition:width .8s cubic-bezier(.4,0,.2,1);}
+  .nearmiss-gap{font-size:13px;color:var(--liab);font-weight:700;text-align:center;margin-bottom:16px;}
+  .retry-glow{
+    width:100%;margin-top:12px;padding:16px 20px;border:none;border-radius:12px;
+    cursor:pointer;font-family:"Noto Serif TC",serif;font-weight:900;font-size:16px;
+    letter-spacing:.08em;background:var(--ink);color:var(--gold-soft);
+    box-shadow:0 0 0 0 rgba(201,162,75,.5);
+    animation:retryGlow 1.8s ease-in-out infinite;
+  }
+  @keyframes retryGlow{
+    0%,100%{box-shadow:0 0 0 0 rgba(201,162,75,.45)}
+    50%{box-shadow:0 0 0 10px rgba(201,162,75,0)}
+  }
+  .retry-glow:hover{background:var(--ink-2);}
+
+  /* ===== Hook F: flash sale card ===== */
+  .card.flash{border-top-color:#e05c56;}
+  .flash-banner{
+    background:linear-gradient(90deg,#a8423d,#c25b56);color:#fff;
+    font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+    padding:5px 18px;display:flex;align-items:center;gap:6px;
+  }
+  .flash-badge{
+    background:#fff;color:#a8423d;font-size:10px;font-weight:900;
+    padding:2px 7px;border-radius:10px;letter-spacing:.04em;
+  }
 </style>
 </head>
 <body>
@@ -336,7 +428,23 @@
   <footer>休息時間的小東西 · WAKE · 用後果教觀念</footer>
 </div>
 
-<div class="overlay" id="intro">
+<!-- Hook A: Soul-question pre-screen -->
+<div class="overlay" id="soulScreen">
+  <div class="modal" style="max-width:480px">
+    <div class="badge">財務現實檢查</div>
+    <p class="soul-q">如果明天停止工作，<br>你現在的存款<br>能活幾天？</p>
+    <div class="soul-counter" id="soulDays">—</div>
+    <div class="soul-sub" id="soulSub">正在計算中…</div>
+    <div class="lesson" style="text-align:left">
+      台灣家庭平均每月支出約 <b>33,000 元</b>。大多數人的存款，撐不過 <b>3 個月</b>。<br><br>
+      <b>老鼠賽跑的真相：</b>每個月薪水入帳，帳單就把它帶走——你不是在累積財富，你在原地踏步。
+    </div>
+    <button class="soul-cta" id="soulCta">我知道了，帶我跳出去 →</button>
+  </div>
+</div>
+
+<!-- Profession picker -->
+<div class="overlay hide" id="intro">
   <div class="modal">
     <div class="badge">選擇職業</div>
     <h2>你被困在老鼠賽跑裡</h2>
@@ -353,6 +461,13 @@
   <div class="modal" id="endModal">
     <div class="badge" id="endBadge"></div>
     <h2 id="endTitle"></h2>
+    <!-- Hook D: near-miss block (shown on lose) -->
+    <div id="nearMissBlock" class="hide">
+      <div class="nearmiss-pct" id="nearMissPct">0%</div>
+      <div class="nearmiss-label">財務自由覆蓋率</div>
+      <div class="nearmiss-bar"><div class="fill" id="nearMissBar" style="width:0%"></div></div>
+      <div class="nearmiss-gap" id="nearMissGap"></div>
+    </div>
     <div class="recap" id="endRecap"></div>
     <div class="statgrid" id="endStats"></div>
     <div class="lesson" id="endLesson"></div>
@@ -363,6 +478,8 @@
       <button class="sh" id="thBtn">發到 Threads</button>
     </div>
     <div class="share-note">手機按「分享成績」可直接把這張圖帶進 Threads／IG；電腦會下載圖片並開啟 Threads 發文，記得手動把圖片附上。</div>
+    <!-- Hook D: near-miss glowing retry button -->
+    <button class="retry-glow hide" id="retryGlowBtn"></button>
     <button id="restartBtn">再玩一次</button>
   </div>
 </div>
@@ -382,19 +499,23 @@ const ROUTES = {
 };
 
 /* ===== 職業（不同投資屬性） ===== */
+/* ===== 職業（Monte Carlo 平衡後，v1.1） ===== */
 const PROFS=[
- {id:"office",name:"上班族",salary:48000,cash:50000,living:{"房租":14000,"生活費":11000,"交通":3500,"娛樂雜支":4500},
-  routeBonus:{},costCut:{},diff:"普通",perk:"沒有特長，也沒有包袱。最標準的起點，適合先熟悉規則。"},
- {id:"engineer",name:"軟體工程師",salary:75000,cash:60000,living:{"房租":18000,"生活費":13000,"交通":4000,"娛樂雜支":8000},
-  routeBonus:{crypto:0.0015,business:0.001},costCut:{},diff:"普通",perk:"高薪，但容易養出高消費。對科技與加密有判斷力——加密／創業的增值較佳。"},
- {id:"doctor",name:"醫師",salary:120000,cash:80000,living:{"房租":28000,"生活費":18000,"交通":8000,"娛樂雜支":12000},
-  routeBonus:{},costCut:{},diff:"困難",perk:"收入最高，開銷也最高。高薪反而最難跳出老鼠賽跑——這就是重點。"},
- {id:"agent",name:"房仲",salary:42000,cash:60000,living:{"房租":14000,"生活費":11000,"交通":5000,"娛樂雜支":5000},
-  routeBonus:{realestate:0.001},costCut:{realestate:0.12},diff:"普通",perk:"懂門路：買房地產頭期／成本打 88 折，也更會挑增值標的。"},
- {id:"food",name:"餐飲服務業者",salary:38000,cash:42000,living:{"房租":13000,"生活費":10500,"交通":3000,"娛樂雜支":4500},
-  routeBonus:{business:0.002},costCut:{business:0.1},diff:"普通",perk:"在餐飲現場打滾，最懂開店眉角（創業增值佳、成本 9 折）。薪水不高、工時長，但最腳踏實地。"},
- {id:"civil",name:"公教人員",salary:45000,cash:55000,living:{"房租":11000,"生活費":9000,"交通":3000,"娛樂雜支":3500},
-  routeBonus:{etf:0.0008,crypto:-0.002},costCut:{},diff:"簡單",perk:"鐵飯碗、開銷低，適合存股慢慢滾（ETF 較佳）。投機不是你的強項（加密較差）。"},
+ {id:"fnb",name:"👨‍🍳 餐飲店員",salary:32000,cash:25000,living:{"房租":10000,"生活費":8000,"交通":3000,"娛樂雜支":3000},
+  routeBonus:{business:0.002},costCut:{business:0.1},diff:"困難",
+  perk:"時間換錢的起點。突破口在技能進修 → 微型副業，先讓薪水跳一級再配高股息。預期通關率 25%，但每一分都是你自己賺來的。"},
+ {id:"clerk",name:"👨‍💼 行政基層",salary:38000,cash:35000,living:{"房租":12000,"生活費":9000,"交通":3500,"娛樂雜支":3500},
+  routeBonus:{etf:0.0008},costCut:{},diff:"普通",
+  perk:"穩健型起點。適合定期定額 ETF 複利慢滾，避開高波動路線。管住娛樂支出，28 回合內有 41% 機率自由。"},
+ {id:"gig",name:"🚚 外送自僱",salary:52000,cash:45000,living:{"房租":12000,"生活費":10000,"交通":6000,"娛樂雜支":6000},
+  routeBonus:{business:0.0015},costCut:{},diff:"普通",
+  perk:"時間彈性最大。積極配置微型副業與現金流資產，預期通關率高達 84%。但交通成本高——別讓油錢吃掉你的本金。"},
+ {id:"engineer",name:"👨‍💻 軟體工程師",salary:85000,cash:90000,living:{"房租":18000,"生活費":16000,"交通":5000,"娛樂雜支":16000},
+  routeBonus:{crypto:0.0015,business:0.001},costCut:{},diff:"普通",
+  perk:"高薪，但高消費是陷阱。避免豪車分期與精緻窮，股房雙核配置。預期通關率 99.9%——但不代表你能無腦贏：負債陷阱破產率仍達 59%。"},
+ {id:"doctor",name:"👨‍⚕️ 執業醫師",salary:160000,cash:160000,living:{"房租":32000,"生活費":28000,"交通":12000,"娛樂雜支":48000},
+  routeBonus:{realestate:0.0005},costCut:{},diff:"困難",
+  perk:"精緻窮代表：收入頂尖，負債也頂尖。豪車、豪宅、名錶把你困住。槓桿房產是出路——但先拒絕誘惑。盲目消費破產率高達 71%。"},
 ];
 
 let AID=1;
@@ -454,18 +575,6 @@ const OPPS=[
   coach:"REITs 讓你不用幾百萬頭期就能當包租公，但它跟著<b>房市</b>漲跌，不是無風險。"},
  {id:"e8",route:"etf",ttl:"0050 正2 槓桿 ETF（累計）",desc:"兩倍槓桿，漲很爽、跌更痛，長期有耗損。",
   buy:{cost:100000,mk:{label:"累計",income:0,value:100000,basis:100000,drift:0.013,vol:0.07,acc:true}},
-  coach:"槓桿 ETF 適合短打不適合長抱：盤整時的<b>波動耗損</b>會慢慢吃掉你的本金。"},
- // ---- 房地產路線：高槓桿、高風險 ----
- {id:"r1",route:"realestate",ttl:"出租套房",desc:"頭期付兩成、借八成。租金進帳，但房貸＋管理費要付——淨現金流才是你的。",leverage:true,
-  buy:{down:250000,mortgage:13500,liabName:"套房房貸",mk:{label:"房產",income:16000,value:1250000,loan:1000000,basis:250000,drift:0.004,vol:0.014}},
-  coach:"毛租金 16,000 不是你的，扣房貸剩<b>淨 2,500</b>。但它正、又吃得到增值（5 倍槓桿），所以是資產。槓桿雙面刃。"},
- {id:"r2",route:"realestate",ttl:"車位出租（小資房產）",desc:"門檻低的房產入門，租金穩、增值慢。",leverage:true,
-  buy:{down:80000,mortgage:2000,liabName:"車位貸款",mk:{label:"房產",income:3500,value:400000,loan:320000,basis:80000,drift:0.003,vol:0.012}}},
- {id:"r3",route:"realestate",ttl:"店面（貸款買進）",desc:"商用租金高、租約長，槓桿放大增值。",leverage:true,
-  buy:{down:350000,mortgage:8000,liabName:"店面房貸",mk:{label:"房產",income:12000,value:1400000,loan:1050000,basis:350000,drift:0.003,vol:0.013}}},
- {id:"r4",route:"realestate",ttl:"商辦店面（全額買進）",desc:"沒有貸款壓力，淨租金穩、增值溫和。資金門檻高。",
-  buy:{cost:700000,mk:{label:"房產",income:7200,value:700000,basis:700000,drift:0.003,vol:0.009}}},
- {id:"r5",route:"realestate",ttl:"預售屋（高槓桿投機）",desc:"工程期間沒租金，賭的是交屋前的增值。槓桿極高。",leverage:true,
   buy:{down:200000,mortgage:0,liabName:"預售屋付款",mk:{label:"房產",income:0,value:1500000,loan:1300000,basis:200000,drift:0.005,vol:0.022}},
   coach:"預售屋不生租金、不算現金流。頭期 20 萬撐 150 萬＝<b>7.5 倍槓桿</b>，房市一修正，你的淨值可能直接歸零。"},
  {id:"r6",route:"realestate",ttl:"土地",desc:"不生租金，純粹賭增值。流動性差、波動大，但翻倍也最猛。",leverage:true,
@@ -513,6 +622,20 @@ const OPPS=[
  {id:"c7",route:"crypto",ttl:"新公鏈代幣（ICO）",desc:"早期項目代幣，題材熱時十倍、退潮時歸零。",
   buy:{cost:25000,mk:{label:"幣",income:0,value:25000,basis:25000,drift:0.005,vol:0.21,acc:true}},
   coach:"ICO／新代幣是加密裡最投機的一角，大多數最後歸零。當賭注，不要當資產配置。"},
+  // ===== 新增：Section 4 四張資產卡 =====
+  {id:"new_etf_div",route:"etf",ttl:"高股息指數 ETF 組合",desc:"一籃高股息 ETF 組合，穩定月月配息，低門檻入場。最適合薪水族的第一步。",
+   buy:{cost:20000,mk:{label:"配息",income:900,value:20000,basis:20000,drift:0.002,vol:0.016}},
+   coach:"<b>第一桶現金流。</b>20,000 換來每月 900——年化 5.4%。它替你工作，而你的薪水是你自己工作。"},
+  {id:"new_side_hustle",route:"business",ttl:"微型無人副業",desc:"數位產品、自動化流程、無人機台——一次建立，持續收租。時間成本低，現金流穩。",
+   buy:{cost:50000,mk:{label:"生意",income:3500,value:50000,basis:50000,drift:0.003,vol:0.04}},
+   coach:"副業的精髓：<b>建立一次，重複收益。</b>3,500/月和你其他資產一起滾，會是最有力的複利引擎。"},
+  {id:"new_realestate",route:"realestate",ttl:"收租小套房（急售）",desc:"屋主急售、低於市價入手。小套房出租，租金扣貸款後還有正現金流。門檻比大套房低。",leverage:true,
+   buy:{down:120000,mortgage:5800,liabName:"小套房房貸",mk:{label:"房產",income:8500,value:600000,loan:480000,basis:120000,drift:0.004,vol:0.014}},
+   coach:"毛租金 8,500 扣房貸 5,800，<b>淨現金流 +2,700</b>。5 倍槓桿讓頭期款吃到整棟增值——但房市修正時也是 5 倍往下。"},
+  {id:"new_skill_upgrade",route:"etf",ttl:"專業技能進修（薪資加速）",desc:"花時間與金錢提升核心技能——轉職、考照、進修課程。不配息，但讓你的薪水跳一級。",
+   buy:{cost:15000,mk:{label:"技能",income:0,value:15000,basis:15000,drift:0,vol:0,acc:true}},
+   skillSalaryBoost:12000,
+   coach:"<b>薪資是你最大的資產，技能決定薪資的天花板。</b>進修 15,000 換來每月多 12,000——9 週回本，然後每月都在賺。"},
 ];
 
 /* ===== 誘惑卡（負債偽裝成資產） ===== */
@@ -646,6 +769,11 @@ const EV=[
 /* ===== deck ===== */
 let bagO=[],bagT=[],bagE=[];
 function drawCard(){
+  // Hook F: 5% chance of flash sale card
+  if(RNG()<0.05 && !S._flashUsed){
+    S._flashUsed=true;
+    return buildFlashSaleCard();
+  }
   const r=RNG();
   if(r<0.46){
     if(!bagO.length) bagO=shuffle(OPPS.map((_,i)=>i));
@@ -660,6 +788,22 @@ function drawCard(){
     if(!bagE.length) bagE=shuffle(EV.map((_,i)=>i));
     return Object.assign({evt:true}, EV[bagE.pop()]);
   }
+}
+function buildFlashSaleCard(){
+  // Pick a random cashflow opportunity at 20% discount
+  const candidates=OPPS.filter(o=>!o.trap&&!o.evt&&!o.leverage&&o.buy&&o.buy.mk&&o.buy.mk.income>0);
+  const base=candidates[Math.floor(RNG()*candidates.length)];
+  const orig=Object.assign({},base);
+  const discountedCost=Math.round((orig.buy.cost||orig.buy.down)*0.8);
+  const flashCard=JSON.parse(JSON.stringify(orig));
+  if(flashCard.buy.cost) flashCard.buy.cost=discountedCost;
+  flashCard.ttl="🔥 限時特賣："+orig.ttl;
+  flashCard.desc=`屋主急售！比市價便宜 20%，<b>僅限本回合</b>。錯過就沒了。原價 NT$${fmt(orig.buy.cost||orig.buy.down)}，現在只要 NT$${fmt(discountedCost)}。`;
+  flashCard._flash=true;
+  flashCard._origTitle=orig.ttl;
+  flashCard.kind="🔥 限時特賣";
+  flashCard.coach="限時機會：折扣貨的邏輯和正常入市一樣，差別只在<b>時間壓力</b>。冷靜判斷：它帶來的現金流值得嗎？";
+  return flashCard;
 }
 
 /* ===== event applier ===== */
@@ -718,6 +862,37 @@ function render(){
   $("ratio").textContent=ratio; $("fill").style.width=ratio+"%";
   $("passiveLeg").textContent=fmt(p); $("goalLeg").textContent=fmt(goal);
   renderHoldings();
+}
+
+/* Hook B helpers */
+let _lastPassive=0;
+function pulseBarIfImproved(){
+  const p=passive();
+  if(p>_lastPassive && p>0){
+    const fill=$("fill");
+    fill.classList.remove("pulse");
+    void fill.offsetWidth; // reflow to restart animation
+    fill.classList.add("pulse");
+    fill.addEventListener("animationend",()=>fill.classList.remove("pulse"),{once:true});
+    // contextual tip
+    const goal=expenses(), ratio=goal>0?Math.round(p/goal*100):0;
+    const msgs=[];
+    if(ratio>=100) msgs.push("被動收入已全覆蓋！自由就在眼前！");
+    else if(ratio>=75) msgs.push(`被動收入覆蓋 ${ratio}%！最後衝刺！`);
+    else if(ratio>=50) msgs.push(`過半了！被動收入覆蓋 ${ratio}%`);
+    else msgs.push(`被動收入 +${fmt(p-_lastPassive)}/月 — 進度 ${ratio}%`);
+    showBarTip(msgs[0]);
+  }
+  _lastPassive=p;
+}
+function showBarTip(msg){
+  let tip=$("barTip");
+  if(!tip){ tip=document.createElement("div"); tip.id="barTip"; tip.className="bar-tip"; $("fill").parentElement.style.position="relative"; $("fill").parentElement.appendChild(tip); }
+  tip.textContent=msg;
+  const ratio=parseFloat($("fill").style.width)||0;
+  tip.style.left=Math.min(Math.max(ratio,10),90)+"%";
+  tip.classList.add("show");
+  clearTimeout(tip._t); tip._t=setTimeout(()=>tip.classList.remove("show"),2800);
 }
 function renderHoldings(){
   const el=$("holdList");
@@ -822,7 +997,11 @@ function resolveCard(c,act){
       a.basis=pay;
       S.assets.push(a);
       if(c.leverage && b.liabName && b.mortgage>0){ const ln=b.liabName+" #"+a.aid; S.liabilities.push({name:ln,payment:b.mortgage}); a.liabName=ln; }
+      // Hook: skill upgrade card boosts salary instead of passive income
+      if(c.skillSalaryBoost){ S.salary+=c.skillSalaryBoost; flashCoach(`技能進修完成！每月薪資 <b>+${fmt(c.skillSalaryBoost)}</b>，存錢速度提升。`); }
       coachMsg=c.coach||(wasFirstIncome?"你買進了第一個會配息的資產。讓它替你工作。":null);
+      // Hook B: trigger gold pulse if passive income improved
+      pulseBarIfImproved();
     }
   } else { if(c.trap) coachMsg="聰明。<b>略過誘惑，把現金留給能生錢的資產。</b>"; }
 
@@ -872,13 +1051,16 @@ let pendingCoach=null;
 function flashCoach(m){ pendingCoach=(pendingCoach?pendingCoach+"<br><br>":"")+m; }
 
 function nextMonth(){
-  let flow=income()-expenses();
+  const expBefore=expenses();
+  let flow=income()-expBefore;
   if(S.tempCut){ flow-=S.tempCut; S.tempCut=0; }
   S.cash+=flow;
   S.stats.activeEarned+=S.salary; S.stats.passiveEarned+=passive();
   S.month++;
   markToMarket();
   runAutoOrders();
+  // Hook C: bleed animation for expense deduction
+  spawnBleedAnim(expBefore);
   if(S.cash<0){
     S.loanCount++;
     if(S.loanCount>=3){ render(); return endGame(false); }
@@ -890,6 +1072,22 @@ function nextMonth(){
   render();
   if(checkEnd()) return;
   showCard(drawCard());
+}
+function spawnBleedAnim(expAmt){
+  const el=document.createElement("div");
+  el.className="bleed-anim";
+  el.textContent="−"+fmt(expAmt);
+  // position near the expense section of the ledger
+  const ledger=document.querySelector(".ledger");
+  if(ledger){
+    const rect=ledger.getBoundingClientRect();
+    el.style.left=(rect.left+rect.width*0.7)+"px";
+    el.style.top=(rect.top+rect.height*0.3+window.scrollY)+"px";
+  } else {
+    el.style.left="60%"; el.style.top="40%";
+  }
+  document.body.appendChild(el);
+  el.addEventListener("animationend",()=>el.remove(),{once:true});
 }
 function checkEnd(){
   if(S.over) return true;
@@ -927,15 +1125,47 @@ function renderEndStats(win){
   h+=`<div class="cell full"><div class="l">一句話結論</div><div class="punch">${punch}</div></div>`;
   $("endStats").innerHTML=h;
 }
+/* Hook E: determine archetype badge */
+function getArchetype(win){
+  const dom=dominantRoute();
+  if(win){
+    if(S.month<=18) return {badge:"👑 天生資本家",flavor:`在台灣當${S.prof.name.replace(/[👨‍🍳👨‍💼🚚👨‍💻👨‍⚕️]/u,"").trim()}，${S.month} 個月達成被動收入全覆蓋，超越全台 92% 的社畜！🐭`};
+    if(dom==="房地產") return {badge:"🏠 全自動包租公",flavor:"只要槓桿用得好，房客幫我打到老。已跳出老鼠賽跑！"};
+    return {badge:"💰 穩健自由人",flavor:`用 ${S.month} 個月讓被動收入超過支出。不快，但是真的自由。`};
+  } else {
+    if(S.loanCount>=2 || S.stats.spentConsumption>S.stats.spentAssets*1.5) return {badge:"💸 精緻窮苦主",flavor:`${S.prof.name.includes("醫")|| S.prof.name.includes("工程")?"高薪卻":"好不容易存的錢，"}最後被負債與消費拖垮... 現實太扎心了 😭`};
+    if(S.assets.length===0 && S.month>20) return {badge:"🐢 佛系苦行僧",flavor:`只存不投，打工到頭。在倉鼠輪上跑了 ${S.month} 個月依然在上班。`};
+    const covPct=Math.round(passive()/Math.max(1,expenses())*100);
+    return {badge:`🌱 覺醒中（${covPct}%）`,flavor:`你已達成 ${covPct}% 的財務自由！只差最後一哩路。`};
+  }
+}
 function endGame(win){
   S.over=true; lastWin=win;
+  const arch=getArchetype(win);
   const m=$("endModal"); m.className="modal "+(win?"win":"lose");
   const assetLines=S.assets.length?S.assets.map(a=>`  ${a.name}　淨值 ${fmt(equity(a))}${a.income>0?` · 配息 +${fmt(a.income)}`:""}`).join("\n"):"  （沒有任何資產）";
   const recap=`${win?"用時":"撐了"}：${S.month} 個月\n職業：${S.prof.name}\n主力路線：${dominantRoute()}\n被動現金流：NT$${fmt(passive())} / 月\n總支出：　　NT$${fmt(expenses())} / 月\n淨資產：　　NT$${fmt(netWorth())}\n`+(win?"":`借高利貸：${S.loanCount} 次\n`)+`————————————\n你的資產：\n${assetLines}`;
-  if(win){ $("endBadge").textContent="你自由了"; $("endTitle").textContent="跳出了老鼠賽跑";
-    $("endLesson").innerHTML=`你做到了核心：<b>讓被動現金流覆蓋全部支出</b>。你贏的關鍵不是薪水高、也不是淨資產大，而是把錢換成了<b>會配息的資產</b>。`;
-  } else { $("endBadge").textContent="破產"; $("endTitle").textContent="你輸給了老鼠賽跑";
-    $("endLesson").innerHTML=`現金見底、被每月的負債支出拖垮。你的錢有多少變成<b>會生錢的資產</b>，又有多少變成<b>每月把錢拿走的負債</b>？`; }
+  // Hook D: badge + near-miss block
+  $("endBadge").textContent=arch.badge;
+  if(win){
+    $("endTitle").textContent="跳出了老鼠賽跑";
+    $("endLesson").innerHTML=`<b>${arch.flavor}</b><br><br>你做到了核心：<b>讓被動現金流覆蓋全部支出</b>。你贏的關鍵不是薪水高、也不是淨資產大，而是把錢換成了<b>會配息的資產</b>。`;
+    $("nearMissBlock").classList.add("hide");
+    $("retryGlowBtn").classList.add("hide");
+  } else {
+    const covPct=Math.min(99,Math.round(passive()/Math.max(1,expenses())*100));
+    const gap=Math.max(0,expenses()-passive());
+    $("endTitle").textContent="差一點就自由了！";
+    $("nearMissPct").textContent=covPct+"%";
+    $("nearMissBar").style.width=covPct+"%";
+    $("nearMissGap").textContent=gap>0?`還差 NT$${fmt(gap)} / 月 的被動收入，就能跳出老鼠賽跑`:`被動收入覆蓋率幾乎達標！`;
+    $("nearMissBlock").classList.remove("hide");
+    $("endLesson").innerHTML=`<b>${arch.flavor}</b><br><br>現金見底、被每月的負債支出拖垮。你的錢有多少變成<b>會生錢的資產</b>，又有多少變成<b>每月把錢拿走的負債</b>？`;
+    const retryBtn=$("retryGlowBtn");
+    retryBtn.textContent="🔘 不服氣！換個策略再挑戰一次 ➔";
+    retryBtn.classList.remove("hide");
+    retryBtn.onclick=()=>{ $("endScreen").classList.add("hide"); $("cardPreview").classList.add("hide"); cardBlob=null; cardURL=null; $("intro").classList.remove("hide"); };
+  }
   $("endRecap").textContent=recap;
   renderEndStats(win);
   $("cardPreview").classList.add("hide");
@@ -947,30 +1177,42 @@ function endGame(win){
 function trackText(x,text,font,sx,sy,tr,fill){ x.font=font; x.fillStyle=fill; let cx=sx; for(const ch of text){ x.fillText(ch,cx,sy); cx+=x.measureText(ch).width+tr; } }
 async function buildCard(win){
   try{ await document.fonts.ready; }catch(e){}
+  const arch=getArchetype(win);
   const W=1080,H=1080, cv=document.createElement("canvas"); cv.width=W; cv.height=H; const x=cv.getContext("2d");
-  const INK="#16302b",INK2="#1f4039",PAPER="#f3efe2",GOLD="#c9a24b",GOLDS="#e3c884",LIAB="#c25b56",DIM="#96aa9e",TRACK="#0f241f";
-  const accent=win?GOLD:LIAB;
+  const INK="#16302b",INK2="#1f4039",PAPER="#f3efe2",GOLD="#c9a24b",GOLDS="#e3c884",LIAB="#c25b56",DIM="#96aa9e",TRACK="#0f241f",ASSET="#2f7d5b";
+  // Hook E: archetype-specific accent colour
+  let accent=win?GOLD:LIAB;
+  if(arch.badge.includes("包租公")) accent=ASSET;
+  if(arch.badge.includes("苦行僧")) accent="#8b7355";
   x.textBaseline="top"; x.fillStyle=INK; x.fillRect(0,0,W,H);
   const g=x.createRadialGradient(W-240,30,30,W-240,30,760); g.addColorStop(0,"rgba(42,91,82,0.55)"); g.addColorStop(1,"rgba(42,91,82,0)"); x.fillStyle=g; x.fillRect(0,0,W,H);
   x.strokeStyle=accent; x.lineWidth=3; x.beginPath(); x.roundRect(30,30,W-60,H-60,28); x.stroke();
   const MX=84;
   trackText(x,"現金流人生",'700 26px "Noto Sans TC"',MX,62,7,GOLD);
   trackText(x,"CASHFLOW",'900 20px "Noto Sans TC"',MX+260,66,9,GOLD);
-  x.font='900 24px "Noto Sans TC"'; const bt=win?"FINANCIALLY  FREE":"GAME  OVER", bw=x.measureText(bt).width, bx0=W/2-(bw+56)/2;
-  x.fillStyle=accent; x.beginPath(); x.roundRect(bx0,150,bw+56,56,28); x.fill(); x.fillStyle=win?INK:PAPER; x.fillText(bt,bx0+28,162);
+  // Hook E: archetype badge on card
+  x.font='900 24px "Noto Sans TC"'; const bt=arch.badge, bw=x.measureText(bt).width, bx0=W/2-(bw+56)/2;
+  x.fillStyle=accent; x.beginPath(); x.roundRect(bx0,140,bw+56,56,28); x.fill();
+  x.fillStyle=win?INK:PAPER; x.fillText(bt,bx0+28,152);
+  // Month number
   const num=String(S.month);
   x.font='900 210px "Noto Serif TC"'; const nw=x.measureText(num).width; x.font='900 72px "Noto Serif TC"'; const uw=x.measureText("個月").width; const gx=W/2-(nw+18+uw)/2;
-  x.fillStyle=PAPER; x.font='900 210px "Noto Serif TC"'; x.fillText(num,gx,250);
-  x.fillStyle=GOLDS; x.font='900 72px "Noto Serif TC"'; x.fillText("個月",gx+nw+18,368);
-  const sub=win?"我跳出了老鼠賽跑":"我被老鼠賽跑拖垮了"; x.fillStyle=GOLDS; x.font='900 56px "Noto Serif TC"'; x.fillText(sub,W/2-x.measureText(sub).width/2,486);
-  const mx0=MX,mx1=W-84,my=596,mh=46,rad=13,ww=mx1-mx0; const ratio=win?1:Math.max(0,Math.min(1,passive()/Math.max(1,expenses())));
+  x.fillStyle=PAPER; x.font='900 210px "Noto Serif TC"'; x.fillText(num,gx,240);
+  x.fillStyle=GOLDS; x.font='900 72px "Noto Serif TC"'; x.fillText("個月",gx+nw+18,358);
+  // Flavor text (archetype)
+  const flavorFull=arch.flavor;
+  const flavorShort=flavorFull.length>28?flavorFull.substring(0,26)+"…":flavorFull;
+  x.fillStyle=GOLDS; x.font='700 34px "Noto Sans TC"'; x.fillText(flavorShort,W/2-x.measureText(flavorShort).width/2,472);
+  // Freedom progress bar
+  const mx0=MX,mx1=W-84,my=570,mh=46,rad=13,ww=mx1-mx0; const ratio=win?1:Math.max(0,Math.min(1,passive()/Math.max(1,expenses())));
   x.fillStyle=GOLDS; x.font='900 24px "Noto Sans TC"'; x.fillText("自由進度 · 主力："+dominantRoute(),mx0,my-40);
   const rt=Math.round(ratio*100)+"%"; x.font='900 32px "Noto Sans TC"'; x.fillStyle=accent; x.fillText(rt,mx1-x.measureText(rt).width,my-44);
   x.fillStyle=TRACK; x.beginPath(); x.roundRect(mx0,my,ww,mh,rad); x.fill();
   x.save(); x.shadowColor=accent; x.shadowBlur=22; x.fillStyle=accent; x.beginPath(); x.roundRect(mx0,my,Math.max(rad*2,ww*ratio),mh,rad); x.fill(); x.restore();
   if(win){ x.fillStyle=GOLDS; x.beginPath(); x.roundRect(mx0+3,my+3,ww-6,12,7); x.fill(); }
+  // Stats grid
   const st=[["被動現金流 / 月","NT$"+fmt(passive()),GOLD],["總支出 / 月","NT$"+fmt(expenses()),PAPER],["淨資產","NT$"+fmt(netWorth()),netWorth()>=0?GOLD:LIAB],["持有資產",S.assets.length+" 項",PAPER]];
-  const cols=[MX,W/2+10], rows=[710,855];
+  const cols=[MX,W/2+10], rows=[690,835];
   st.forEach((s,i)=>{ const cx=cols[i%2],cy=rows[(i/2)|0]; x.fillStyle=DIM; x.font='700 24px "Noto Sans TC"'; x.fillText(s[0],cx,cy); x.fillStyle=s[2]; x.font='900 46px "Noto Sans TC"'; x.fillText(s[1],cx,cy+34); });
   x.strokeStyle=INK2; x.lineWidth=2; x.beginPath(); x.moveTo(MX,990); x.lineTo(W-84,990); x.stroke();
   x.fillStyle=GOLD; x.font='900 28px "Noto Serif TC"'; x.fillText("WAKE STUDIO",MX,1006);
@@ -1013,17 +1255,29 @@ function buildProfGrid(){
 }
 function startGame(profId){
   chosenProf=profId||chosenProf;
-  S=freshState(chosenProf); bagO=[];bagT=[];bagE=[];
+  S=freshState(chosenProf); bagO=[];bagT=[];bagE=[]; _lastPassive=0;
   const p=PROFS.find(x=>x.id===S.prof.id)||PROFS[0];
   $("coach").innerHTML=`<span class="who">職業 · ${p.name}</span>${p.perk}<br><br><b>目標：</b>累積會配息的資產，讓被動現金流覆蓋全部支出，跳出老鼠賽跑。`;
   render(); showCard(drawCard());
 }
+
+/* Hook A: Soul question wiring */
+(function initSoulScreen(){
+  const avgMonthlyExp=33000; // avg TW household
+  const savingsOptions=[50000,100000,200000,500000];
+  const s=savingsOptions[Math.floor(Math.random()*savingsOptions.length)];
+  const days=Math.round(s/avgMonthlyExp*30);
+  $("soulDays").textContent=days+" 天";
+  $("soulSub").textContent=`假設你的存款約 NT$${fmt(s)}，以台灣平均月支出 NT$${fmt(avgMonthlyExp)} 計算`;
+  $("soulCta").onclick=()=>{ $("soulScreen").classList.add("hide"); $("intro").classList.remove("hide"); };
+})();
+
 buildProfGrid();
 $("nextBtn").onclick=nextMonth;
 $("shareBtn").onclick=onShare;
 $("dlBtn").onclick=downloadCard;
 $("thBtn").onclick=openThreads;
-$("restartBtn").onclick=()=>{ $("endScreen").classList.add("hide"); $("cardPreview").classList.add("hide"); cardBlob=null; cardURL=null; $("intro").classList.remove("hide"); };
+$("restartBtn").onclick=()=>{ $("endScreen").classList.add("hide"); $("cardPreview").classList.add("hide"); cardBlob=null; cardURL=null; $("soulScreen").classList.remove("hide"); };
 render();
 
 </script>
