@@ -277,6 +277,199 @@
   .hide{display:none!important}
   footer{margin-top:22px;text-align:center;font-size:11px;color:var(--text-dim);letter-spacing:.06em}
 
+  /* ===== Ch7: Sticky HUD ===== */
+  .hud-sticky{
+    position:sticky;top:0;z-index:30;
+    background:linear-gradient(180deg,var(--ink) 80%,transparent);
+    padding-bottom:8px;margin-bottom:0;
+  }
+  /* Pull header into sticky zone */
+  .hud-sticky header{margin-bottom:14px;}
+
+  /* ===== Ch7: Hamster wheel animation ===== */
+  .wheel-zone{
+    display:flex;align-items:center;justify-content:center;
+    gap:14px;padding:10px 0 6px;pointer-events:none;
+    position:relative;
+  }
+  @keyframes wheelSpin{ to{transform:rotate(360deg)} }
+  @keyframes runnerBob{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
+  @keyframes trackScroll{ from{background-position:0 0} to{background-position:-40px 0} }
+  .wheel-svg{width:68px;height:68px;flex-shrink:0;opacity:.7}
+  .wheel-ring{
+    transform-origin:34px 34px;
+    animation:wheelSpin 2s linear infinite;
+  }
+  .wheel-runner{
+    transform-origin:34px 38px;
+    animation:runnerBob 0.4s ease-in-out infinite;
+  }
+  .wheel-label{
+    font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--text-dim);font-weight:700;
+  }
+  .wheel-month-badge{
+    font-family:"Space Mono",monospace;font-size:18px;
+    font-weight:700;color:var(--gold-soft);
+  }
+
+  /* ===== Ch7: Number counter jump (numPop) ===== */
+  @keyframes numPop{
+    0%{transform:scale(1)}
+    40%{transform:scale(1.18)}
+    70%{transform:scale(.96)}
+    100%{transform:scale(1)}
+  }
+  .num-pop{animation:numPop .35s cubic-bezier(.34,1.56,.64,1)}
+  @keyframes numGreen{0%,100%{color:inherit}30%{color:#7fd6a6}}
+  @keyframes numRed{0%,100%{color:inherit}30%{color:#f0a09b}}
+  .num-up{animation:numGreen .6s ease-out}
+  .num-dn{animation:numRed .6s ease-out}
+
+  /* ===== Ch7: Screen shake + vignette ===== */
+  @keyframes shakeFx{
+    0%,100%{transform:translate(0)}
+    10%{transform:translate(-6px,3px)}
+    20%{transform:translate(6px,-3px)}
+    30%{transform:translate(-5px,5px)}
+    40%{transform:translate(5px,-2px)}
+    50%{transform:translate(-4px,4px)}
+    60%{transform:translate(4px,-4px)}
+    70%{transform:translate(-3px,2px)}
+    80%{transform:translate(3px,-1px)}
+    90%{transform:translate(-2px,1px)}
+  }
+  body.shaking{animation:shakeFx .55s ease-out}
+  #vignette{
+    position:fixed;inset:0;pointer-events:none;z-index:190;
+    opacity:0;transition:opacity .12s;
+    background:radial-gradient(ellipse at center, transparent 40%, rgba(168,66,61,.65) 100%);
+  }
+  #vignette.show{opacity:1;}
+
+  /* ===== Ch7: Bottom Sheet Drawer ===== */
+  #drawerToggle{
+    position:fixed;bottom:22px;right:18px;z-index:60;
+    background:var(--ink-2);border:1px solid rgba(201,162,75,.4);
+    border-radius:50px;padding:11px 18px;
+    font-family:"Noto Sans TC",sans-serif;font-size:13px;font-weight:700;
+    color:var(--gold-soft);cursor:pointer;
+    box-shadow:0 6px 24px rgba(0,0,0,.45);
+    display:flex;align-items:center;gap:7px;
+    transition:.15s;
+  }
+  #drawerToggle:hover{background:var(--ink);transform:translateY(-1px)}
+  #drawerToggle .dt-badge{
+    background:var(--gold);color:var(--ink);font-size:10px;font-weight:900;
+    padding:1px 6px;border-radius:10px;min-width:18px;text-align:center;
+  }
+  #drawer{
+    position:fixed;inset:0;z-index:70;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    background:rgba(10,24,20,.72);backdrop-filter:blur(3px);
+    opacity:0;pointer-events:none;transition:opacity .22s;
+  }
+  #drawer.open{opacity:1;pointer-events:all;}
+  #drawerSheet{
+    background:var(--paper);color:var(--text);
+    border-radius:20px 20px 0 0;
+    max-height:78vh;overflow:hidden;
+    display:flex;flex-direction:column;
+    transform:translateY(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);
+    box-shadow:0 -12px 40px rgba(0,0,0,.4);
+  }
+  #drawer.open #drawerSheet{transform:translateY(0)}
+  .drawer-handle{
+    width:42px;height:4px;border-radius:2px;background:var(--paper-line);
+    margin:12px auto 0;flex-shrink:0;
+  }
+  .drawer-header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 18px 0;flex-shrink:0;
+  }
+  .drawer-title{font-family:"Noto Serif TC",serif;font-weight:900;font-size:17px;color:var(--ink)}
+  .drawer-close{
+    background:none;border:none;cursor:pointer;color:var(--text-dim);
+    font-size:20px;padding:4px;line-height:1;
+  }
+  .drawer-tabs{
+    display:flex;border-bottom:2px solid var(--paper-line);
+    padding:0 14px;margin-top:10px;flex-shrink:0;
+  }
+  .drawer-tab{
+    flex:1;padding:10px 4px;text-align:center;font-size:13px;font-weight:700;
+    background:none;border:none;cursor:pointer;color:var(--text-dim);
+    border-bottom:2px solid transparent;margin-bottom:-2px;transition:.12s;
+  }
+  .drawer-tab.active{color:var(--ink);border-bottom-color:var(--gold);}
+  .drawer-body{
+    overflow-y:auto;flex:1;padding:14px 18px 24px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .d-card{
+    background:#fbf9f1;border-radius:10px;padding:12px 14px;
+    margin-bottom:10px;border-left:3px solid var(--gold);
+  }
+  .d-card.liab{border-left-color:var(--liab);}
+  .d-card.prot{border-left-color:#4a90d9;}
+  .d-card-name{font-weight:700;font-size:14px;color:var(--ink);margin-bottom:4px}
+  .d-card-sub{font-family:"Space Mono",monospace;font-size:12px;color:var(--text-dim)}
+  .d-card-inc{font-family:"Space Mono",monospace;font-size:13px;font-weight:700;color:var(--asset)}
+  .d-empty{color:var(--paper-dim);font-style:italic;font-size:13px;text-align:center;padding:24px 0}
+
+  /* ===== Ch7: Mobile float bar ===== */
+  #floatBar{
+    display:none;
+    position:fixed;bottom:0;left:0;right:0;z-index:55;
+    padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+    background:linear-gradient(0deg,var(--ink) 60%,transparent);
+  }
+  @media(max-width:780px){
+    #floatBar{display:block}
+    /* push content above float bar */
+    .wrap{padding-bottom:90px}
+    /* hide drawer toggle on mobile — float bar replaces it */
+    #drawerToggle{bottom:80px;right:14px}
+  }
+  #floatBarBtn{
+    width:100%;padding:15px;border:none;border-radius:12px;cursor:pointer;
+    font-family:"Noto Serif TC",serif;font-weight:900;font-size:16px;
+    letter-spacing:.1em;background:linear-gradient(180deg,var(--gold-soft),var(--gold));
+    color:#3a2c08;box-shadow:0 6px 18px rgba(201,162,75,.3);
+  }
+  #floatBarBtn:disabled{background:#b9b3a2;color:#7c7768;cursor:not-allowed;box-shadow:none}
+
+  /* ===== Ch7: Win confetti ===== */
+  @keyframes confettiFall{
+    0%{transform:translate(0,0) rotate(0deg);opacity:1}
+    100%{transform:translate(var(--cx),var(--cy)) rotate(var(--cr));opacity:0}
+  }
+  .confetti-bit{
+    position:fixed;top:50%;left:50%;width:8px;height:8px;
+    border-radius:2px;pointer-events:none;z-index:999;
+    animation:confettiFall var(--cd) ease-out forwards;
+  }
+
+  /* ===== Ch7: Share card ripple ===== */
+  @keyframes ripplePulse{
+    0%{box-shadow:0 10px 26px rgba(0,0,0,.4),0 0 0 0 rgba(201,162,75,.5)}
+    50%{box-shadow:0 10px 26px rgba(0,0,0,.4),0 0 0 12px rgba(201,162,75,0)}
+    100%{box-shadow:0 10px 26px rgba(0,0,0,.4),0 0 0 0 rgba(201,162,75,0)}
+  }
+  .card-preview:not(.hide){
+    animation:ripplePulse 2s ease-in-out infinite;
+    cursor:pointer;
+  }
+
+  /* ===== Ch7: Near-miss bar slide-in ===== */
+  @keyframes slideUp{
+    from{opacity:0;transform:translateY(16px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  #nearMissBlock:not(.hide){
+    animation:slideUp .5s .2s ease-out both;
+  }
+
   /* ===== Hook B: gold pulse on progress bar ===== */
   @keyframes goldPulse{
     0%{box-shadow:0 0 18px rgba(201,162,75,.6)}
@@ -372,6 +565,8 @@
 </head>
 <body>
 <div class="wrap">
+  <!-- Ch7: wrap header + freedom in sticky HUD zone -->
+  <div class="hud-sticky">
   <header>
     <div class="brand">
       <div class="eyebrow">現金流人生 · Cashflow</div>
@@ -394,6 +589,31 @@
       <span>終點線＝總支出 <b class="mono">NT$<span id="goalLeg">33,000</span></b> / 月</span>
     </div>
   </section>
+  </div><!-- /.hud-sticky -->
+
+  <!-- Ch7: Hamster wheel zone -->
+  <div class="wheel-zone" id="wheelZone">
+    <svg class="wheel-svg" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g class="wheel-ring">
+        <circle cx="34" cy="34" r="30" stroke="#c9a24b" stroke-width="3" stroke-dasharray="8 4" fill="none" opacity=".6"/>
+        <circle cx="34" cy="34" r="22" stroke="#e3c884" stroke-width="1.5" fill="none" opacity=".3"/>
+        <line x1="34" y1="4" x2="34" y2="12" stroke="#c9a24b" stroke-width="2" opacity=".5"/>
+        <line x1="64" y1="34" x2="56" y2="34" stroke="#c9a24b" stroke-width="2" opacity=".5"/>
+        <line x1="4" y1="34" x2="12" y2="34" stroke="#c9a24b" stroke-width="2" opacity=".5"/>
+        <line x1="34" y1="64" x2="34" y2="56" stroke="#c9a24b" stroke-width="2" opacity=".5"/>
+      </g>
+      <g class="wheel-runner">
+        <circle cx="34" cy="28" r="4" fill="#e3c884" opacity=".8"/>
+        <path d="M30 35 Q34 32 38 35 L40 44 Q34 41 28 44 Z" fill="#e3c884" opacity=".7"/>
+        <line x1="28" y1="44" x2="24" y2="52" stroke="#c9a24b" stroke-width="2" stroke-linecap="round"/>
+        <line x1="40" y1="44" x2="44" y2="52" stroke="#c9a24b" stroke-width="2" stroke-linecap="round"/>
+      </g>
+    </svg>
+    <div>
+      <div class="wheel-label">第 <span class="wheel-month-badge" id="wheelMonth">0</span> 個月</div>
+      <div class="wheel-label" style="margin-top:2px">在輪上奔跑中… · 每月流出 <span style="color:var(--liab);font-family:Space Mono,monospace" id="wheelExp"></span></div>
+    </div>
+  </div>
 
   <div class="grid">
     <section class="ledger">
@@ -426,6 +646,36 @@
   </section>
 
   <footer>休息時間的小東西 · WAKE · 用後果教觀念</footer>
+</div>
+
+<!-- Ch7: Red vignette overlay -->
+<div id="vignette"></div>
+
+<!-- Ch7: Bottom sheet drawer -->
+<div id="drawer">
+  <div id="drawerSheet">
+    <div class="drawer-handle"></div>
+    <div class="drawer-header">
+      <span class="drawer-title">📊 資產負債表</span>
+      <button class="drawer-close" id="drawerClose" aria-label="關閉">✕</button>
+    </div>
+    <div class="drawer-tabs">
+      <button class="drawer-tab active" data-tab="assets">資產清單</button>
+      <button class="drawer-tab" data-tab="liabs">負債清單</button>
+      <button class="drawer-tab" data-tab="prot">防護狀態</button>
+    </div>
+    <div class="drawer-body" id="drawerBody"></div>
+  </div>
+</div>
+
+<!-- Ch7: Drawer toggle button -->
+<button id="drawerToggle" aria-label="開啟資產負債表">
+  📊 資產負債表 <span class="dt-badge" id="drawerBadge">0</span>
+</button>
+
+<!-- Ch7: Mobile float bar -->
+<div id="floatBar">
+  <button id="floatBarBtn" disabled>結算這個月 ▸ 抽下一張卡</button>
 </div>
 
 <!-- Hook A: Soul-question pre-screen -->
@@ -818,20 +1068,131 @@ function applyEvent(ev){
       notes.push(hit?`${ROUTES[r].name}資產市值 ×${f}`:`你沒有${ROUTES[r].name}部位`); } }
   if(ev.cut==="rent"){ const x=S.assets.find(a=>a.route==="realestate"&&a.income>0); if(x){ S.tempCut+=x.income; notes.push("本月一筆租金歸零"); } else notes.push("你沒有出租物件"); }
   else if(typeof ev.cut==="number"){ S.tempCut+=ev.cut; notes.push(`本月被動收入暫減 ${fmt(ev.cut)}`); }
+  // Ch7: crash events trigger screen shake + vignette
+  if(ev.stat==="crashes"){
+    setTimeout(()=>triggerShake(),120);
+    setTimeout(()=>triggerVignette(),80);
+  }
   return notes.join("、")||"無事發生";
 }
 
 /* ===== render ===== */
 const $=id=>document.getElementById(id);
 function lineRow(name,amt,dir,tag,tagcls){
-  const tg=tag?`<span class="tag ${tagcls||""}">${tag}</span>`:"";
+  const tg=tag?`<span class="tag ${tagcls||""}">  ${tag}</span>`:"";
   const sign=dir==="in"?"+":dir==="out"?"−":"";
   return `<div class="line"><span>${name}${tg}</span><span class="amt ${dir}">${sign}${fmt(Math.abs(amt))}</span></div>`;
 }
+
+/* Ch7: animated number counter */
+let _prevCash=0, _prevNW=0;
+function animateNumber(el,from,to,dur){
+  if(!el||from===to) return;
+  const start=performance.now();
+  const dir=to>from?"up":"dn";
+  el.classList.remove("num-up","num-dn","num-pop");
+  void el.offsetWidth;
+  el.classList.add("num-pop","num-"+dir);
+  function step(now){
+    const t=Math.min(1,(now-start)/dur);
+    const ease=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+    el.textContent=fmt(Math.round(from+(to-from)*ease));
+    if(t<1) requestAnimationFrame(step);
+    else el.textContent=fmt(to);
+  }
+  requestAnimationFrame(step);
+}
+
+/* Ch7: screen shake + vignette */
+function triggerShake(){
+  document.body.classList.remove("shaking");
+  void document.body.offsetWidth;
+  document.body.classList.add("shaking");
+  document.body.addEventListener("animationend",()=>document.body.classList.remove("shaking"),{once:true});
+}
+function triggerVignette(){
+  const v=document.getElementById("vignette");
+  v.classList.add("show");
+  clearTimeout(v._t);
+  v._t=setTimeout(()=>v.classList.remove("show"),900);
+}
+
+/* Ch7: win confetti */
+function spawnConfetti(){
+  const colors=["#c9a24b","#e3c884","#7fd6a6","#f0a09b","#4a90d9","#ff9800"];
+  for(let i=0;i<70;i++){
+    const el=document.createElement("div");
+    el.className="confetti-bit";
+    const angle=Math.random()*Math.PI*2;
+    const dist=120+Math.random()*260;
+    const cx=Math.cos(angle)*dist+"px";
+    const cy=(Math.sin(angle)*dist-160)*(0.6+Math.random()*0.8)+"px";
+    const cr=(Math.random()*720-360)+"deg";
+    const cd=(0.5+Math.random()*0.9)+"s";
+    el.style.cssText=`--cx:${cx};--cy:${cy};--cr:${cr};--cd:${cd};background:${colors[i%colors.length]};animation-delay:${Math.random()*0.3}s`;
+    document.body.appendChild(el);
+    el.addEventListener("animationend",()=>el.remove(),{once:true});
+  }
+}
+
+/* Ch7: drawer content renderer */
+let _drawerTab="assets";
+function renderDrawerContent(){
+  const body=$("drawerBody");
+  if(!body) return;
+  if(_drawerTab==="assets"){
+    if(!S.assets.length){ body.innerHTML=`<div class="d-empty">— 還沒有任何資產。先買進一個讓錢替你工作。—</div>`; return; }
+    body.innerHTML=S.assets.map(a=>{
+      const eq=equity(a),pl=eq-a.basis,plSign=pl>=0?"+":"−";
+      const incTxt=a.income>0?`+${fmt(a.income)}/月 被動收入`:`累計型 · 不配息`;
+      return `<div class="d-card"><div class="d-card-name">${a.name} <span class="tag r-${a.route}">${ROUTES[a.route].name}</span></div><div class="d-card-inc">${incTxt}</div><div class="d-card-sub">淨值 NT$${fmt(eq)} ｜ 未實現 ${plSign}${fmt(Math.abs(pl))}</div></div>`;
+    }).join("");
+  } else if(_drawerTab==="liabs"){
+    if(!S.liabilities.length){ body.innerHTML=`<div class="d-empty">— 目前沒有負債（很好！）—</div>`; return; }
+    body.innerHTML=S.liabilities.map(l=>`<div class="d-card liab"><div class="d-card-name">${l.name}</div><div class="d-card-sub" style="color:var(--liab)">每月 −${fmt(l.payment)}</div></div>`).join("");
+  } else {
+    const hasAssets=S.assets.length>0, hasLiab=S.liabilities.length>0;
+    body.innerHTML=`
+      <div class="d-card prot">
+        <div class="d-card-name">🛡 資產防護狀態</div>
+        <div class="d-card-sub" style="margin-top:6px">
+          ${hasAssets?`持有 ${S.assets.length} 項資產，被動收入 NT$${fmt(passive())}/月`:"尚未持有任何資產"}
+        </div>
+      </div>
+      <div class="d-card prot">
+        <div class="d-card-name">🏦 負債狀況</div>
+        <div class="d-card-sub" style="margin-top:6px">
+          ${hasLiab?`${S.liabilities.length} 筆負債，每月固定支出 NT$${fmt(S.liabilities.reduce((s,l)=>s+l.payment,0))}`:"無負債 ✅"}
+        </div>
+      </div>
+      <div class="d-card prot">
+        <div class="d-card-name">🔒 保險狀態</div>
+        <div class="d-card-sub" style="margin-top:6px;color:var(--text-dim)">v1.0 尚無保險機制。v2.0 將加入：醫療險、失業保障、意外險——購買保險可減少黑天鵝事件的損失。</div>
+      </div>`;
+  }
+}
+
 function render(){
+  const prevCash=_prevCash, prevNW=_prevNW;
+  _prevCash=S.cash; _prevNW=netWorth();
+
   $("month").textContent=S.month;
-  $("cash").textContent=fmt(S.cash);
-  $("networth").textContent=fmt(netWorth());
+  if($("wheelMonth")) $("wheelMonth").textContent=S.month;
+  if($("wheelExp")) $("wheelExp").textContent="NT$"+fmt(expenses());
+
+  // Ch7: animate numbers if changed
+  const cashEl=$("cash"), nwEl=$("networth");
+  if(S.month>0 && Math.abs(S.cash-prevCash)>10){
+    animateNumber(cashEl,prevCash,S.cash,480);
+  } else {
+    cashEl.textContent=fmt(S.cash);
+  }
+  if(S.month>0 && Math.abs(netWorth()-prevNW)>10){
+    animateNumber(nwEl,prevNW,netWorth(),480);
+  } else {
+    nwEl.textContent=fmt(netWorth());
+  }
+
   if(S.stats) S.stats.peakNW=Math.max(S.stats.peakNW, netWorth());
 
   let inc=lineRow("薪資（主動）",S.salary,"in");
@@ -861,6 +1222,18 @@ function render(){
   const ratio=goal>0?Math.min(100,Math.round(p/goal*100)):0;
   $("ratio").textContent=ratio; $("fill").style.width=ratio+"%";
   $("passiveLeg").textContent=fmt(p); $("goalLeg").textContent=fmt(goal);
+
+  // Ch7: update drawer badge count
+  const badge=$("drawerBadge");
+  if(badge) badge.textContent=S.assets.length;
+
+  // Ch7: sync mobile float bar with nextBtn
+  const nb=$("nextBtn"), fb=$("floatBarBtn");
+  if(fb){
+    fb.disabled=nb.classList.contains("hide")||nb.disabled;
+    fb.textContent=nb.textContent||"結算這個月 ▸ 抽下一張卡";
+  }
+
   renderHoldings();
 }
 
@@ -1152,6 +1525,8 @@ function endGame(win){
     $("endLesson").innerHTML=`<b>${arch.flavor}</b><br><br>你做到了核心：<b>讓被動現金流覆蓋全部支出</b>。你贏的關鍵不是薪水高、也不是淨資產大，而是把錢換成了<b>會配息的資產</b>。`;
     $("nearMissBlock").classList.add("hide");
     $("retryGlowBtn").classList.add("hide");
+    // Ch7: win confetti
+    setTimeout(()=>spawnConfetti(),300);
   } else {
     const covPct=Math.min(99,Math.round(passive()/Math.max(1,expenses())*100));
     const gap=Math.max(0,expenses()-passive());
@@ -1165,11 +1540,17 @@ function endGame(win){
     retryBtn.textContent="🔘 不服氣！換個策略再挑戰一次 ➔";
     retryBtn.classList.remove("hide");
     retryBtn.onclick=()=>{ $("endScreen").classList.add("hide"); $("cardPreview").classList.add("hide"); cardBlob=null; cardURL=null; $("intro").classList.remove("hide"); };
+    // Ch7: shake on loss
+    setTimeout(()=>triggerShake(),200);
+    setTimeout(()=>triggerVignette(),150);
   }
   $("endRecap").textContent=recap;
   renderEndStats(win);
   $("cardPreview").classList.add("hide");
   $("endScreen").classList.remove("hide");
+  // Ch7: share card ripple on tap
+  const prev=$("cardPreview");
+  prev.onclick=()=>onShare();
   makeCard(win);
 }
 
@@ -1278,6 +1659,34 @@ $("shareBtn").onclick=onShare;
 $("dlBtn").onclick=downloadCard;
 $("thBtn").onclick=openThreads;
 $("restartBtn").onclick=()=>{ $("endScreen").classList.add("hide"); $("cardPreview").classList.add("hide"); cardBlob=null; cardURL=null; $("soulScreen").classList.remove("hide"); };
+
+/* Ch7: Mobile float bar sync */
+$("floatBarBtn").onclick=nextMonth;
+
+/* Ch7: Bottom sheet drawer wiring */
+$("drawerToggle").onclick=()=>{ $("drawer").classList.add("open"); renderDrawerContent(); };
+$("drawerClose").onclick=()=>$("drawer").classList.remove("open");
+$("drawer").onclick=e=>{ if(e.target===$("drawer")) $("drawer").classList.remove("open"); };
+document.querySelectorAll(".drawer-tab").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".drawer-tab").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    _drawerTab=btn.dataset.tab;
+    renderDrawerContent();
+  };
+});
+
+/* Ch7: keep nextBtn + floatBarBtn in sync (hide/show) */
+const _origNextBtnShow=Object.getOwnPropertyDescriptor(HTMLElement.prototype,"className");
+(function patchNextBtn(){
+  const nb=$("nextBtn"), fb=$("floatBarBtn");
+  const obs=new MutationObserver(()=>{
+    const hidden=nb.classList.contains("hide")||nb.hasAttribute("disabled");
+    fb.disabled=hidden;
+  });
+  obs.observe(nb,{attributes:true,attributeFilter:["class","disabled"]});
+})();
+
 render();
 
 </script>
