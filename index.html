@@ -123,8 +123,21 @@
   .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:start}
   @media(max-width:780px){
     .grid{display:flex;flex-direction:column;align-items:stretch}
-    .side{order:-1}            /* 手機：卡片＋教練移到財務報表上方，開局就看到能操作的東西 */
-    .clock{text-align:left}
+    .side{order:-1}            /* 手機：卡片＋教練移到財務報表上方 */
+    .clock{text-align:left;gap:14px}
+    .clock .blk .val{font-size:20px}
+    .clock .blk .val.nw{font-size:16px}
+    /* 財務報表兩欄 → 單欄 */
+    .col2{display:flex;flex-direction:column}
+    .col2>div{padding:12px 14px}
+    .col2>div:first-child{border-right:none;border-bottom:1px dashed var(--paper-line)}
+    /* 持倉 */
+    .holds{margin-top:12px}
+    /* header 壓縮 */
+    header{margin-bottom:10px;gap:10px}
+    .freedom{padding:14px 16px;margin-bottom:12px}
+    /* 進度條輕量化 */
+    .track{height:22px}
   }
 
   .ledger{background:var(--paper);color:var(--text);border-radius:14px;box-shadow:0 12px 28px var(--shadow);overflow:hidden}
@@ -245,29 +258,65 @@
   .profgrid .pc-stats{font-family:"Space Mono",monospace;font-size:12px;color:var(--text-dim);margin-bottom:5px}
   .profgrid .pc-perk{font-size:12.5px;color:#3a463b;line-height:1.55}
   @media(max-width:560px){
-    body{padding:14px}
-    header{margin-bottom:14px}
-    .freedom{padding:16px}
-    .freedom .top .t{font-size:14px}
-    .freedom .ratio{font-size:19px}
-    .ledger h2,.holds h2{padding:12px 14px;font-size:14px;flex-wrap:wrap;gap:4px}
-    .col2 > div{padding:12px}
-    .line{font-size:12.5px}
+    body{padding:10px 12px}
+    header{margin-bottom:10px}
+    .brand .eyebrow{font-size:11px;letter-spacing:.22em}
+    .h1-style{font-size:clamp(18px,5vw,26px)}
+    .freedom{padding:12px 14px}
+    .freedom .top{margin-bottom:8px}
+    .freedom .top .t{font-size:13px}
+    .freedom .ratio{font-size:17px}
+    .freedom .legend{font-size:11px;gap:4px}
+    .ledger h2,.holds h2{padding:11px 14px;font-size:13.5px;flex-wrap:wrap;gap:4px}
+    .ledger h2 .net{font-size:12px}
+    .col2>div{padding:10px 12px}
+    .line{font-size:12px;padding:4px 0}
+    .grp-title{font-size:10px;margin-bottom:6px}
     .grp-title small{display:none}
-    .sumline{padding:10px 14px}
-    .card .ttl{font-size:18px}
-    .card .desc{font-size:13px}
-    .card .acts button{padding:16px}
-    .coach{font-size:13px}
-    .share-row .sh{flex:1;min-width:42%}
+    .sumline{padding:9px 14px;font-size:12px}
+    .card .ttl{font-size:17px;padding:2px 14px 8px}
+    .card .desc{font-size:12.5px;padding:0 14px 10px}
+    .card .acts button{padding:15px;font-size:13px}
+    .card .kind{padding:10px 14px 0}
+    .card .stats{padding:0 14px 12px}
+    .coach{font-size:12.5px;padding:12px 14px}
+    /* wheel zone compact */
+    .wheel-zone{padding:6px 0 4px;gap:10px}
+    .wheel-svg{width:50px;height:50px}
+    .wheel-month-badge{font-size:15px}
+    .wheel-label{font-size:10px}
+    /* modal */
+    .modal{padding:22px 18px;border-radius:14px}
+    .modal h2{font-size:21px}
+    .modal .recap{font-size:11px;padding:12px}
+    .statgrid .cell .v{font-size:14px}
+    .share-row .sh{flex:1;min-width:42%;padding:10px 12px;font-size:13px}
+    /* prof grid */
+    .profgrid .pc-name{font-size:16px}
+    .profgrid .profcard{padding:11px 13px}
+    /* holds */
+    .hold{padding:11px 14px}
+    .sellbtn{width:100%;padding:12px;font-size:13px}
+    /* drawer */
+    #drawerSheet{max-height:85vh}
+    .drawer-title{font-size:15px}
+    .drawer-tab{font-size:12px;padding:9px 4px}
   }
   @media(max-width:380px){
-    body{padding:10px}
-    .clock{gap:14px}
-    .clock .blk .val{font-size:21px}
-    .clock .blk .val.nw{font-size:16px}
-    .freedom .legend{font-size:11px}
-    .modal{padding:24px 20px}
+    body{padding:8px 10px}
+    .clock{gap:10px}
+    .clock .blk .val{font-size:18px}
+    .clock .blk .val.nw{font-size:14px}
+    .clock .blk .lbl{font-size:10px}
+    .freedom .legend{font-size:10.5px}
+    .modal{padding:18px 14px}
+    .modal h2{font-size:18px}
+    .card .ttl{font-size:16px}
+    .profgrid .pc-name{font-size:14px}
+    /* compact hud */
+    .hud-sticky{padding-bottom:4px}
+    .wheel-zone{padding:4px 0 2px}
+    .wheel-svg{width:40px;height:40px}
   }
   @media(prefers-reduced-motion:reduce){
     *,.track .fill{transition:none!important;animation:none!important}
@@ -436,6 +485,8 @@
     .wrap{padding-bottom:90px}
     /* hide drawer toggle on mobile — float bar replaces it */
     #drawerToggle{bottom:80px;right:14px}
+    /* hide original nextBtn on mobile — floatBarBtn replaces it */
+    #nextBtn{display:none!important}
   }
   #floatBarBtn{
     width:100%;padding:15px;border:none;border-radius:12px;cursor:pointer;
