@@ -103,11 +103,15 @@
   .brand .eyebrow{font-size:12px;letter-spacing:.34em;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:4px}
   .brand h1{font-family:"Noto Serif TC",serif;font-weight:900;font-size:clamp(24px,5vw,38px);line-height:1;color:var(--paper)}
   .brand h1 .sub{color:var(--gold-soft);font-size:.52em;display:block;margin-top:6px;letter-spacing:.06em;font-weight:700}
+  /* 簡化 HUD：現金 + 月淨現金流（去掉淨資產） */
   .clock{text-align:right;display:flex;gap:22px}
   .clock .blk .lbl{font-size:11px;letter-spacing:.18em;color:var(--text-dim);text-transform:uppercase}
   .clock .blk .val{font-family:"Space Mono",monospace;font-size:24px;font-weight:700;color:var(--paper);line-height:1.2}
   .clock .blk .val.cash{color:var(--gold)}
-  .clock .blk .val.nw{color:var(--gold-soft);font-size:18px}
+  .clock .blk .val.flow-pos{color:#7fd6a6}
+  .clock .blk .val.flow-neg{color:#f0a09b}
+  /* 無法負擔提示列 */
+  .afford-hint{font-size:12px;color:#c9a24b;background:rgba(201,162,75,.12);border:1px solid rgba(201,162,75,.3);border-radius:8px;padding:8px 14px;margin:0 18px 10px;line-height:1.55}
 
   .freedom{background:linear-gradient(180deg,var(--ink-2),#173630);border:1px solid rgba(201,162,75,.35);border-radius:14px;padding:18px 22px;margin-bottom:18px;box-shadow:0 10px 30px var(--shadow)}
   .freedom .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;flex-wrap:wrap;gap:8px}
@@ -379,6 +383,21 @@
   @keyframes numGreen{0%,100%{color:inherit}30%{color:#7fd6a6}}
   @keyframes numRed{0%,100%{color:inherit}30%{color:#f0a09b}}
   .num-up{animation:numGreen .6s ease-out}
+  #drawerToggle{
+    position:fixed;top:70px;right:14px;z-index:40;
+    width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
+    background:linear-gradient(135deg,var(--ink-2),#1a3d35);
+    box-shadow:0 4px 18px rgba(0,0,0,.45);
+    font-size:20px;display:flex;align-items:center;justify-content:center;
+    transition:.15s;
+  }
+  #drawerToggle:hover{transform:scale(1.08)}
+  #drawerBadge{
+    position:absolute;top:-4px;right:-4px;
+    background:var(--gold);color:#3a2c08;
+    font-size:10px;font-weight:900;border-radius:10px;
+    padding:1px 5px;min-width:16px;text-align:center;
+  }
   .num-dn{animation:numRed .6s ease-out}
 
   /* ===== Ch7: Screen shake + vignette ===== */
@@ -488,13 +507,11 @@
     /* hide original nextBtn on mobile — floatBarBtn replaces it */
     #nextBtn{display:none!important}
   }
-  #floatBarBtn{
-    width:100%;padding:15px;border:none;border-radius:12px;cursor:pointer;
-    font-family:"Noto Serif TC",serif;font-weight:900;font-size:16px;
-    letter-spacing:.1em;background:linear-gradient(180deg,var(--gold-soft),var(--gold));
-    color:#3a2c08;box-shadow:0 6px 18px rgba(201,162,75,.3);
-  }
-  #floatBarBtn:disabled{background:#b9b3a2;color:#7c7768;cursor:not-allowed;box-shadow:none}
+  /* 手機版 floatBar 將被 One-Tap Flow 取代，尸進 safe area */
+  #floatBar{display:none!important}
+  #nextBtn{display:none!important}
+  /* safe area for drawer */
+  #drawerSheet{padding-bottom:env(safe-area-inset-bottom,20px)}
 
   /* ===== Ch7: Win confetti ===== */
   @keyframes confettiFall{
@@ -631,7 +648,7 @@
     </div>
     <div class="clock">
       <div class="blk"><div class="lbl">第 <span id="month">1</span> 月</div><div class="val cash mono">NT$<span id="cash">50,000</span></div><div class="lbl" style="margin-top:3px">現金</div></div>
-      <div class="blk"><div class="lbl">淨資產</div><div class="val nw mono">NT$<span id="networth">50,000</span></div><div class="lbl" style="margin-top:3px">cash + 淨值</div></div>
+      <div class="blk"><div class="lbl">月淨現金流</div><div class="val flow-pos mono">+NT$<span id="monthflow">0</span></div><div class="lbl" style="margin-top:3px">每月結餘</div></div>
     </div>
   </header>
 
@@ -1237,17 +1254,18 @@ function render(){
   if($("wheelMonth")) $("wheelMonth").textContent=S.month;
   if($("wheelExp")) $("wheelExp").textContent="NT$"+fmt(expenses());
 
-  // Ch7: animate numbers if changed
-  const cashEl=$("cash"), nwEl=$("networth");
+  // 簡化 HUD：移除淨資產欄位，新增月淨現金流
+  const cashEl=$("cash"), flowEl=$("monthflow");
   if(S.month>0 && Math.abs(S.cash-prevCash)>10){
     animateNumber(cashEl,prevCash,S.cash,480);
   } else {
     cashEl.textContent=fmt(S.cash);
   }
-  if(S.month>0 && Math.abs(netWorth()-prevNW)>10){
-    animateNumber(nwEl,prevNW,netWorth(),480);
-  } else {
-    nwEl.textContent=fmt(netWorth());
+  // 月淨現金流
+  if(flowEl){
+    const sp=surplus();
+    flowEl.textContent=(sp>=0?"+":"−")+fmt(Math.abs(sp));
+    flowEl.className="val "+(sp>=0?"flow-pos":"flow-neg");
   }
 
   if(S.stats) S.stats.peakNW=Math.max(S.stats.peakNW, netWorth());
@@ -1280,16 +1298,9 @@ function render(){
   $("ratio").textContent=ratio; $("fill").style.width=ratio+"%";
   $("passiveLeg").textContent=fmt(p); $("goalLeg").textContent=fmt(goal);
 
-  // Ch7: update drawer badge count
-  const badge=$("drawerBadge");
-  if(badge) badge.textContent=S.assets.length;
-
-  // Ch7: sync mobile float bar with nextBtn
-  const nb=$("nextBtn"), fb=$("floatBarBtn");
-  if(fb){
-    fb.disabled=nb.classList.contains("hide")||nb.disabled;
-    fb.textContent=nb.textContent||"結算這個月 ▸ 抽下一張卡";
-  }
+  // Ch7: sync mobile float bar (hidden now, kept for safety)
+  // One-Tap Flow: nextBtn and floatBar permanently hidden
+  $("nextBtn")?.classList.add("hide");
 
   renderHoldings();
 }
@@ -1389,13 +1400,31 @@ function showCard(c){
       if(S.cash<pay){affordable=false;reason="現金不足";}
     }
   }
+  // 改良 3: 無法負擔時顯示正向引導
+  let affordHint="";
+  if(!c.evt && !affordable){
+    const cost=c.trap?(c.cashHit||c.down||0):(()=>{try{return payFor(c);}catch{return 0;}})();
+    const gap=cost-S.cash;
+    const monthlySave=surplus(); // 目前每月結餘
+    let hintTxt="";
+    if(gap>0 && monthlySave>0){
+      const months=Math.ceil(gap/monthlySave);
+      hintTxt=months<=6
+        ?`💡 還差 NT$${fmt(gap)}，照目前存錢速度約 <b>${months} 個月後</b>即可購買！`
+        :`💡 還差 NT$${fmt(gap)}。先積累現金流或賣出資產增加存款吧。`;
+    } else if(gap>0 && monthlySave<=0){
+      hintTxt=`⚠️ 每月又入不敷出，就算存錢也買不了。需要先提升被動收入或削減支出。`;
+    }
+    if(hintTxt) affordHint=`<div class="afford-hint">${hintTxt}</div>`;
+  }
+
   let acts;
   if(c.evt){ acts=`<div class="acts"><button class="primary" data-act="accept">知道了，繼續</button></div>`; }
   else{ const lbl=c.trap?(c.raise?"接受加薪":"買下去"):"買進";
-    acts=`<div class="acts"><button data-act="skip">略過</button><button class="primary" data-act="accept" ${affordable?"":"disabled"}>${affordable?lbl:"無法負擔"}</button></div>`; }
-  const warn=(!c.evt&&!affordable)?`<div class="warn">${reason} — 先存錢或賣資產換現金</div>`:"";
+    acts=`<div class="acts"><button data-act="skip">⤵️ 本月略過</button><button class="primary" data-act="accept" ${affordable?"":"disabled"}>${affordable?`💰 ${lbl}（−NT$${fmt((()=>{try{if(c.trap)return c.cashHit||c.down||0;return payFor(c);}catch{return 0;}})())}）`:'無法負擔'}</button></div>`; }
+  const warn=(!c.evt&&!affordable)?`<div class="warn">${reason}</div>`:"";
   const kind=c.kind||(c.evt?"事件":"投資機會");
-  slot.innerHTML=`<div class="card ${cls}"><div class="kind">${kind}</div><div class="ttl">${c.ttl}</div>${feat}<div class="desc">${c.desc||c.d||""}</div><div class="stats">${stats}</div>${warn}${acts}</div>`;
+  slot.innerHTML=`<div class="card ${cls}"><div class="kind">${kind}</div><div class="ttl">${c.ttl}</div>${feat}<div class="desc">${c.desc||c.d||""}</div><div class="stats">${stats}</div>${warn}${affordHint}${acts}</div>`;
   slot.querySelectorAll("button[data-act]").forEach(b=>b.onclick=()=>resolveCard(c,b.dataset.act));
   curCard=c; curResolved=false;
   $("nextBtn").classList.add("hide");
@@ -1438,8 +1467,14 @@ function resolveCard(c,act){
   if(coachMsg) setCoach(c,coachMsg);
   render();
   curResolved=true;
+  // 禁用卡片按鈕（防止重複點擊）
   $("cardSlot").querySelectorAll(".card button[data-act]").forEach(b=>b.disabled=true);
-  $("nextBtn").classList.remove("hide");
+  if(S.over) return; // 遊戲結束則不自動推進
+  // 改良 1: One-Tap Flow — 600ms 延遲後自動执行月結算
+  $("nextBtn").classList.add("hide");
+  const _card=document.querySelector("#cardSlot .card");
+  if(_card){ _card.style.transition="opacity .4s .15s, transform .4s .15s"; _card.style.opacity="0.4"; _card.style.transform="translateY(-6px) scale(.98)"; }
+  setTimeout(()=>{ if(!S.over) nextMonth(); }, 650);
   checkEnd();
 }
 function setCoach(c,msg){
