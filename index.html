@@ -275,6 +275,14 @@
   .hide{display:none!important}
   footer{margin-top:22px;text-align:center;font-size:11px;color:var(--text-dim);letter-spacing:.06em}
 
+  /* h1-style: visual h1 on a <p> element to avoid duplicate h1 */
+  .h1-style{
+    font-family:"Noto Serif TC",serif;font-weight:900;
+    font-size:clamp(22px,5vw,32px);line-height:1.15;margin:0;
+    color:var(--text);
+  }
+  .h1-style .sub{display:block;font-size:14px;letter-spacing:.06em;color:var(--text-dim);margin-top:3px;font-weight:400}
+
   /* ===== Ch7: Sticky HUD ===== */
   .hud-sticky{
     position:sticky;top:0;z-index:30;
@@ -562,13 +570,13 @@
 </style>
 </head>
 <body>
-<div class="wrap">
+<main class="wrap" id="mainContent">
   <!-- Ch7: wrap header + freedom in sticky HUD zone -->
   <div class="hud-sticky">
   <header>
     <div class="brand">
-      <div class="eyebrow">現金流人生 · Cashflow</div>
-      <h1>跳出老鼠賽跑<span class="sub">讓被動收入養活你，而不是薪水</span></h1>
+      <div class="eyebrow">WAKE Studio · 現金流遊戲</div>
+      <p class="h1-style">老鼠賽跑<span class="sub">Mice Runner — 跳出財務困局</span></p>
     </div>
     <div class="clock">
       <div class="blk"><div class="lbl">第 <span id="month">1</span> 月</div><div class="val cash mono">NT$<span id="cash">50,000</span></div><div class="lbl" style="margin-top:3px">現金</div></div>
@@ -629,9 +637,9 @@
     </section>
 
     <div class="side">
-      <div id="cardSlot"></div>
+      <div id="cardSlot" aria-live="polite" aria-atomic="true"></div>
       <button class="nextbtn hide" id="nextBtn">結算這個月 ▸ 抽下一張卡</button>
-      <div class="coach" id="coach">
+      <div class="coach" id="coach" aria-live="polite" aria-atomic="false">
         <span class="who">富爸爸 · 第一課</span>
         <b>資產把錢放進你口袋，負債把錢拿走。</b> 目標：累積足夠的資產，讓被動<b>現金流</b>覆蓋全部支出。注意——只會增值、不配息的「累計型」資產能讓你變有錢，卻不會幫你跨過自由線，因為它沒給你現金流。
       </div>
@@ -644,7 +652,7 @@
   </section>
 
   <footer>休息時間的小東西 · WAKE · 用後果教觀念</footer>
-</div>
+</main><!-- /.wrap -->
 
 <!-- Ch7: Red vignette overlay -->
 <div id="vignette"></div>
@@ -677,9 +685,9 @@
 </div>
 
 <!-- Hook A: Soul-question pre-screen -->
-<div class="overlay" id="soulScreen">
+<div class="overlay" id="soulScreen" role="dialog" aria-modal="true" aria-labelledby="soulScreenTitle">
   <div class="modal" style="max-width:480px">
-    <div class="badge">財務現實檢查</div>
+    <div class="badge" id="soulScreenTitle">財務現實檢查</div>
     <p class="soul-q">如果明天停止工作，<br>你現在的存款<br>能活幾天？</p>
     <div class="soul-counter" id="soulDays">—</div>
     <div class="soul-sub" id="soulSub">正在計算中…</div>
@@ -692,10 +700,10 @@
 </div>
 
 <!-- Profession picker -->
-<div class="overlay hide" id="intro">
+<div class="overlay hide" id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle">
   <div class="modal">
     <div class="badge">選擇職業</div>
-    <h2>你被困在老鼠賽跑裡</h2>
+    <h2 id="introTitle">你被困在老鼠賽跑裡</h2>
     <p>每月領薪、付帳單，途中出現<b>機會卡</b>與<b>誘惑卡</b>。目標：讓被動<b>現金流 ≥ 總支出</b>，跳出老鼠賽跑。</p>
     <div class="lesson">
       <b>配息型</b>資產給你每月現金流（推進自由）；<b>累計型</b>只增值、不配息（要止盈換成會生錢的資產）。小心偽裝成資產的負債：新車、自住房、升職加薪。
@@ -705,7 +713,7 @@
   </div>
 </div>
 
-<div class="overlay hide" id="endScreen">
+<div class="overlay hide" id="endScreen" role="dialog" aria-modal="true" aria-labelledby="endTitle">
   <div class="modal" id="endModal">
     <div class="badge" id="endBadge"></div>
     <h2 id="endTitle"></h2>
@@ -727,7 +735,7 @@
     </div>
     <div class="share-note">手機按「分享成績」可直接把這張圖帶進 Threads／IG；電腦會下載圖片並開啟 Threads 發文，記得手動把圖片附上。</div>
     <!-- Hook D: near-miss glowing retry button -->
-    <button class="retry-glow hide" id="retryGlowBtn"></button>
+    <button class="retry-glow hide" id="retryGlowBtn" aria-label="不服氣！換個策略再挑戰一次">不服氣！換個策略再挑戰一次 ➔</button>
     <button id="restartBtn">再玩一次</button>
   </div>
 </div>
